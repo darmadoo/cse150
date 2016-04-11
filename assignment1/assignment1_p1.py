@@ -1,4 +1,4 @@
-# _ _author_ _ = 'mdarmadi@ucsd.edu, A11410141, '
+__author__ = 'mdarmadi@ucsd.edu, A11410141, '
 import sys
 
 def getPossibleActions(currentPrime):
@@ -21,3 +21,5 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
+#change by pycharm
