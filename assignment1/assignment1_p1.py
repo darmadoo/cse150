@@ -2,13 +2,13 @@ __author__ = 'mdarmadi@ucsd.edu, A11410141, '
 import sys
 
 
-allPrime = {} #allPrime is going to be a dictionary showing whether a number is prime
+# allPrime = {} #allPrime is going to be a dictionary showing whether a number is prime
 closedList = {} # closedList is going to be a dictionary showing the parent of number
 frontier = [] # list of nodes (number) ready to be explored
 
 def isPrime(n):
-    # if n < 2:
-    #     return False
+    if n == 0 or n == 1:
+         return False
     if n == 2:
         return True
     if n % 2 == 0:
@@ -67,6 +67,16 @@ def getPath(startingPrime, finalPrime):
     possibleAction = (getPossibleActions(startingPrime))
     frontier = possibleAction
 
+    if (finalPrime in frontier): # if it takes only one digit to change from starting --> final prime
+        outputString = str(startingPrime) + " " + str(finalPrime)
+
+        print("here's the output string: " + outputString)
+
+        file = open('output.txt', 'w')
+        print >> file, outputString
+        file.close()
+        return
+
     for i in range(0, len(frontier)): # indicate who the parent is
         closedList[frontier[i]] = startingPrime
 
@@ -77,7 +87,7 @@ def getPath(startingPrime, finalPrime):
         currentNode = frontier[0]
         childOfNode = getPossibleActions(currentNode)
 
-        print("child of node " + str(currentNode) + " is: " + str(childOfNode))
+        # print("child of node " + str(currentNode) + " is: " + str(childOfNode))
 
         if (finalPrime in childOfNode): # if we can find the final prime
             outputString = str(finalPrime)
@@ -86,18 +96,28 @@ def getPath(startingPrime, finalPrime):
                 currentNode = closedList[currentNode]
             outputString = str(startingPrime) + " " + outputString
 
+            print("here's the output string: " + outputString)
+
             file = open('output.txt', 'w')
             print >> file, outputString
             file.close()
 
             return
 
+        for i in range(0, len(childOfNode)): # indicate who the parent is
+            closedList[childOfNode[i]] = currentNode
 
+        frontier.remove(currentNode)
 
+        additionalNodes = childOfNode
+        for i in range(0, len(childOfNode)):
+            if (childOfNode[i] in frontier):
+                additionalNodes.remove(childOfNode[i])
 
+        for i in range(0, len(additionalNodes)):
+            frontier.append(additionalNodes[i])
 
-
-
+        print("get here")
 
     file = open('output.txt', 'w')
     print >> file, 'UNSOLVABLE'
@@ -107,15 +127,15 @@ def getPath(startingPrime, finalPrime):
     return getPath
 
 def main():
-    allNum = []
-    for x in range(2, 1000001):
-        allNum.append(x)
-
-    for i in allNum:
-        if isPrime(i):
-            allPrime[i] = True
-        else:
-            allPrime[i] = False
+    # allNum = []
+    # for x in range(2, 1000001):
+    #     allNum.append(x)
+    #
+    # for i in allNum:
+    #     if isPrime(i):
+    #         allPrime[i] = True
+    #     else:
+    #         allPrime[i] = False
 
     # Replacing number in int ex. from 103 -> 203
     j = 103
@@ -126,8 +146,8 @@ def main():
 
 
     primes = str(sys.stdin.readline()).split()
-    getPossibleActions(89)
-    getPath(89, 11)
+   # getPossibleActions(103)
+    getPath(2, 3)
 
 
 if __name__ == '__main__':
