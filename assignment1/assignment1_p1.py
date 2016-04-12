@@ -3,7 +3,8 @@ import sys
 
 
 allPrime = {} #allPrime is going to be a dictionary showing whether a number is prime
-closedList = {} #closedList is going to e a dictionary showing whether a prime number has been visited or not
+closedList = {} # closedList is going to be a dictionary showing the parent of number
+frontier = [] # list of nodes (number) ready to be explored
 
 def isPrime(n):
     # if n < 2:
@@ -54,14 +55,33 @@ def getPossibleActions(currentPrime):
 
             currentList[i] = curChar # return currentList to original char
 
-    print("possible actions: ")
-    print(listOfPrimes)
-
+    print("possible actions for " + str(currentPrime) + " is: " + str(listOfPrimes))
     return listOfPrimes
 
 
 def getPath(startingPrime, finalPrime):
-    # your code here
+
+    possibleAction = (getPossibleActions(startingPrime))
+    frontier = possibleAction
+
+    for i in range(0, len(frontier)): # indicate who the parent is
+        closedList[frontier[i]] = startingPrime
+
+    print("frontier: " + str(frontier))
+    print("closed list: " + str(closedList))
+
+    while (frontier): # until no discoverable nodes
+        currentNode = frontier[0]
+        childOfNode = getPossibleActions(currentNode)
+
+
+
+
+    file = open('output.txt', 'w')
+    print >> file, 'UNSOLVABLE'
+    file.close()
+
+
     return getPath
 
 def main():
@@ -85,6 +105,7 @@ def main():
 
     primes = str(sys.stdin.readline()).split()
     getPossibleActions(89)
+    getPath(89, 11)
 
 
 if __name__ == '__main__':
