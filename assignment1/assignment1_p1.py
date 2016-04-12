@@ -1,7 +1,7 @@
 __author__ = 'mdarmadi@ucsd.edu, A11410141, '
 import sys
 
-allPrime = []
+allPrime = {}
 
 def isprime(n):
     # if n < 2:
@@ -35,7 +35,16 @@ def main():
 
 	for i in allNum:
 		if isprime(i):
-			allPrime.append(i)
+			allPrime[i] = True
+		else:
+			allPrime[i] = False
+
+	# Replacing number in int ex. from 103 -> 203
+	j = 103
+	numj = str(j)
+	listj = list(numj)
+	listj[0] = '2'
+	numj = ''.join(listj)
 
 	primes = str(sys.stdin.readline()).split()
 	print(getPath(primes[0], primes[1]))
