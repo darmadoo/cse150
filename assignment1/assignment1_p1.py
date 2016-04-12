@@ -50,8 +50,11 @@ def getPossibleActions(currentPrime):
             #see if curInt is a prime
 # 			if(allPrime[newInt] and not closedList[newInt]):
 # 				listOfPrimes.append(newInt)
+
+            # check if new integer is prime and not in closedList already
             if (isPrime(newInt)):
-                listOfPrimes.append(newInt)
+                if (not newInt in closedList):
+                    listOfPrimes.append(newInt)
 
             currentList[i] = curChar # return currentList to original char
 
@@ -73,6 +76,25 @@ def getPath(startingPrime, finalPrime):
     while (frontier): # until no discoverable nodes
         currentNode = frontier[0]
         childOfNode = getPossibleActions(currentNode)
+
+        print("child of node " + str(currentNode) + " is: " + str(childOfNode))
+
+        if (finalPrime in childOfNode): # if we can find the final prime
+            outputString = str(finalPrime)
+            while currentNode != startingPrime:
+                outputString = str(currentNode) + " " + outputString
+                currentNode = closedList[currentNode]
+            outputString = str(startingPrime) + " " + outputString
+
+            file = open('output.txt', 'w')
+            print >> file, outputString
+            file.close()
+
+            return
+
+
+
+
 
 
 
