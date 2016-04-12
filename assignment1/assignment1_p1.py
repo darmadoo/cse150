@@ -1,9 +1,9 @@
 __author__ = 'mdarmadi@ucsd.edu, A11410141, '
 import sys
 
-#allPrime is going to be a dictionary showing whether a number is prime
-allPrime = []
 
+#allPrime is going to be a dictionary showing whether a number is prime
+allPrime = {}
 #closedList is going to e a dictionary showing whether a prime number has been visited or not 
 closedList = {}	
 
@@ -66,8 +66,19 @@ def main():
 
 	for i in allNum:
 		if isprime(i):
-			allPrime.append(i)
-			allPrime['key'] = value
+
+			allPrime[i] = True
+		else:
+			allPrime[i] = False
+
+	# Replacing number in int ex. from 103 -> 203
+	j = 103
+	numj = str(j)
+	listj = list(numj)
+	listj[0] = '2'
+	numj = ''.join(listj)
+
+
 	primes = str(sys.stdin.readline()).split()
 	getPossibleActions(113)
 
