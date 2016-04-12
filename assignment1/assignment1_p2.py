@@ -50,16 +50,13 @@ def getPossibleActions(currentPrime):
 
             currentList[i] = curChar # return currentList to original char
 
-    print("possible actions for " + str(currentPrime) + " is: " + str(listOfPrimes))
+    #print("possible actions for " + str(currentPrime) + " is: " + str(listOfPrimes))
     return listOfPrimes
 
 
 def getPath(startingPrime, finalPrime):
 	# your code here
-	#depth limit is 5
-	
-	#declare currentPrime
-	currentPrime
+	#depth limit is 5	
 	#declare stack
 	stack = LifoQueue()
 	
@@ -70,6 +67,7 @@ def getPath(startingPrime, finalPrime):
 	while(not stack.empty()):
 		#pop a from stack
 		a = stack.get()
+
 		#if a.currentPrime == finalPrime
 		if(a[0] == finalPrime):
 			break
@@ -80,19 +78,32 @@ def getPath(startingPrime, finalPrime):
 		#find all neighbor of currentPrime
 		neighbor = getPossibleActions(a[0])
 		
-		for i in neighbor:
+		for i in range(0,len(neighbor)):
 			#set the parent of the neighbor to currentPrime
-			closedList[neighbor[i]] = a[0]
+			closedList[str(neighbor[i])] = a[0]
 			#push all neighbor as <neighbor,a.depth + 1> into the stack
-			stack.put((neighbor[i],a[1] + 1))
+			stack.put((str(neighbor[i]),a[1] + 1))
 		
 	
 	#if(currentPRime != finalPrime)
 	if(a[0] != finalPrime):
 		#unsolvable
-		return -1
-	#print the found path
-	return getPath
+		outputString = 'UNSOLVABLE'
+		
+	else:
+		current = a[0]
+		outputString = ""
+		outputString = current + " " + outputString
+		while(current != startingPrime):
+			current = closedList[current]
+			outputString = current + " " + outputString
+# 		outputString = startingPrime + " " + outputString
+	
+	file = open('output.txt','w')
+ 	print >> file,outputString
+	print(outputString)
+	file.close()
+	return 
 
 def main():
 	primes = str(sys.stdin.readline()).split()
