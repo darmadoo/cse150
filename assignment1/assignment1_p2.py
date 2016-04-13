@@ -5,8 +5,8 @@ from Queue import LifoQueue
 closedList = {} # closedList is going to be a dictionary showing the parent of number
 
 def isPrime(n):
-    # if n < 2:
-    #     return False
+    if n == 0 or n == 1:
+         return False
     if n == 2:
         return True
     if n % 2 == 0:

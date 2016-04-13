@@ -6,8 +6,8 @@ closedList = {} # closedList is going to be a dictionary showing the parent of n
 MAXDEPTH = 8
 
 def isPrime(n):
-    # if n < 2:
-    #     return False
+    if n == 0 or n == 1:
+         return False
     if n == 2:
         return True
     if n % 2 == 0:
@@ -39,10 +39,6 @@ def getPossibleActions(currentPrime):
             currentList[i] = j          # replace the digit
             newStr = ''.join(currentList)
             newInt = int(newStr)            # might not need to convert to int if dictionary uses str for key
-
-            #see if curInt is a prime
-# 			if(allPrime[newInt] and not closedList[newInt]):
-# 				listOfPrimes.append(newInt)
 
             # check if new integer is prime and not in closedList already
             if (isPrime(newInt)):
