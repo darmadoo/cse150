@@ -56,26 +56,39 @@ def getPossibleActions(currentPrime):
 
 
 def getPath(startingPrime, finalPrime):
-    queue = [(startingPrime, 0)]
+    # Initialized queue with the starting prime and the starting total cost
+    # cost so far + distance to reach = 0 + heuristic
+    queue = [(startingPrime, heuristic(startingPrime, finalPrime))]
 
+    # While the queue is not empty
     while queue:
+        # Set the head of the queue to be the current node
         current = queue[0]
 
+        # if the current node is the final prime we are looking for, return
         if current[0] == finalPrime:
             print "SUCCESS"
             break
 
+        # Else, we store the possible actions of the current number
         childOfNode = getPossibleActions(current[0])
+        # Set the parent for each child
         for i in range(0, len(childOfNode)):
             closedList[str(childOfNode[i])] = current[0]
 
         print "Current is " + str(current)
 
+        # Remove the current number
         queue.remove(current)
 
+        # Add in the children of the removed prime
         for i in range(0, len(childOfNode)):
+            # Calculate the distance to reach for each child
             heu = heuristic(childOfNode[i], finalPrime)
+            # Append it to the queue with the updated cost
             queue.append((childOfNode[i], current[1] + 1 + heu))
+            # Sort the queue so it is like a priority queue
+            # Sorts it by the second value, which is the cost
             queue.sort(key=operator.itemgetter(1))
 
         print queue
