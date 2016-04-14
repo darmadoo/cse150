@@ -41,7 +41,7 @@ def getPossibleActions(currentPrime):
 
             # check if new integer is prime and not in closedList already
             if (isPrime(newInt)):
-                if (not newInt in closedList):
+                if (not str(newInt) in closedList):
                     listOfPrimes.append(newInt)
 
             currentList[i] = curChar # return currentList to original char
