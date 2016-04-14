@@ -1,5 +1,6 @@
 __author__ = 'mdarmadi@ucsd.edu, A11410141, '
 import sys
+import time
 
 closedList = {} # closedList is going to be a dictionary showing the parent of number
 frontier = [] # list of nodes (number) ready to be explored
@@ -112,6 +113,7 @@ def main():
     first = list(primes[0])
     second = list(primes[1])
     if len(first) - len(second) == 0:
+        t0 = time.time()
         getPath(int(primes[0]), int(primes[1]))
     else:
         outputString = 'UNSOLVABLE'
@@ -119,6 +121,8 @@ def main():
         print >> ofile, outputString
         print outputString
         ofile.close()
+    t1 = time.time()
+    print t1 - t0
 
 if __name__ == '__main__':
     main()

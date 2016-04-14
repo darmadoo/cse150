@@ -1,9 +1,8 @@
 __author__ = 'mdarmadi@ucsd.edu, A11410141, '
 import sys
 import operator
-
+import time
 closedList = {} # closedList is going to be a dictionary showing the parent of number
-frontier = [] # list of nodes (number) ready to be explored
 
 def isPrime(n):
     if n == 0 or n == 1:
@@ -46,8 +45,8 @@ def getPossibleActions(currentPrime):
             newInt = int(newStr)            # might not need to convert to int if dictionary uses str for key
 
             # check if new integer is prime and not in closedList already
-            if (isPrime(newInt)):
-                if (not str(newInt) in closedList):
+            if isPrime(newInt):
+                if not str(newInt) in closedList:
                     listOfPrimes.append(newInt)
 
             currentList[i] = curChar # return currentList to original char
@@ -90,9 +89,6 @@ def getPath(startingPrime, finalPrime):
             # Sort the queue so it is like a priority queue
             # Sorts it by the second value, which is the cost
             queue.sort(key=operator.itemgetter(1))
-
-        #print queue
-        
         
     outputString = ""
     #if finalPrime is not found
@@ -101,7 +97,7 @@ def getPath(startingPrime, finalPrime):
     else: # print the found path
         curPrime = finalPrime
         outputString = str(curPrime) + ' ' +  outputString
-        while(curPrime != startingPrime):
+        while curPrime != startingPrime:
             curPrime = closedList[str(curPrime)]
             outputString = str(curPrime) + ' ' + outputString
 		
@@ -134,6 +130,7 @@ def main():
     first = list(primes[0])
     second = list(primes[1])
     if len(first) - len(second) == 0:
+        t0 = time.time()
         getPath(int(primes[0]), int(primes[1]))
     else:
         outputString = 'UNSOLVABLE'
@@ -141,6 +138,9 @@ def main():
         print >> ofile, outputString
         print outputString
         ofile.close()
+
+    t1 = time.time()
+    print t1 - t0
 
 if __name__ == '__main__':
     main()

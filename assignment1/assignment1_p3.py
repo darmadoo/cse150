@@ -1,6 +1,7 @@
 # _ _author_ _ = 'mdarmadi@ucsd.edu, A11410141, '
 import sys
 from Queue import LifoQueue
+import time
 
 closedList = {} # closedList is going to be a dictionary showing the parent of number
 MAXDEPTH = 8
@@ -114,8 +115,10 @@ def getIterativePath(startPrime, finalPrime):
 
 def main():
 	primes = str(sys.stdin.readline()).split()
+	t0 = time.time()
 	getIterativePath(primes[0], primes[1])
-
+	t1 = time.time()
+	print t1 - t0
 
 if __name__ == '__main__':
 	main()
