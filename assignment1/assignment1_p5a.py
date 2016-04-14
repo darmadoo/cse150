@@ -68,8 +68,6 @@ def getPath(startingPrime, finalPrime):
 
         # if the current node is the final prime we are looking for, return
         if current[0] == finalPrime:
-            print "SUCCESS"
-            print current[0]
             break
 
         # Else, we store the possible actions of the current number
@@ -77,8 +75,6 @@ def getPath(startingPrime, finalPrime):
         # Set the parent for each child
         for i in range(0, len(childOfNode)):
             closedList[str(childOfNode[i])] = current[0]
-
-        print "Current is " + str(current)
 
         # Remove the current number
         queue.remove(current)
@@ -99,8 +95,6 @@ def getPath(startingPrime, finalPrime):
         
         
     outputString = ""
-    print "This is"
-    print current[0]
     #if finalPrime is not found
     if current[0] != finalPrime :
         outputString =  'UNSOLVABLE'
@@ -136,22 +130,17 @@ def heuristic(start, end):
     return count
 
 def main():
-    # Replacing number in int ex. from 103 -> 203
-    j = 103
-    numj = str(j)
-    listj = list(numj)
-    listj[0] = '2'
-    numj = ''.join(listj)
-
-    path = getPossibleActions(109)
-    heuList = {}
-    # print(path)
-    for i in range (0, len(path)):
-        heuList[path[i]] = heuristic(path[i], 309)
-    # print(heuList)
-
     primes = str(sys.stdin.readline()).split()
-    getPath(int(primes[0]), int(primes[1]))
+    first = list(primes[0])
+    second = list(primes[1])
+    if len(first) - len(second) == 0:
+        getPath(int(primes[0]), int(primes[1]))
+    else:
+        outputString = 'UNSOLVABLE'
+        ofile = open('output.txt', 'w')
+        print >> ofile, outputString
+        print outputString
+        ofile.close()
 
 if __name__ == '__main__':
     main()

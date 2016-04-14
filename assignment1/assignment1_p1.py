@@ -64,6 +64,7 @@ def getPath(startingPrime, finalPrime):
 
         file = open('output.txt', 'w')
         print >> file, outputString
+        print outputString
         file.close()
         return
 
@@ -82,6 +83,7 @@ def getPath(startingPrime, finalPrime):
             outputString = str(startingPrime) + " " + outputString
             file = open('output.txt', 'w')
             print >> file, outputString
+            print outputString
             file.close()
             return
 
@@ -100,20 +102,23 @@ def getPath(startingPrime, finalPrime):
 
     file = open('output.txt', 'w')
     print >> file, 'UNSOLVABLE'
+    print "UNSOLVABLE"
     file.close()
 
     return getPath
 
 def main():
-    # Replacing number in int ex. from 103 -> 203
-    j = 103
-    numj = str(j)
-    listj = list(numj)
-    listj[0] = '2'
-    numj = ''.join(listj)
-
     primes = str(sys.stdin.readline()).split()
-    getPath(int(primes[0]), int(primes[1]))
+    first = list(primes[0])
+    second = list(primes[1])
+    if len(first) - len(second) == 0:
+        getPath(int(primes[0]), int(primes[1]))
+    else:
+        outputString = 'UNSOLVABLE'
+        ofile = open('output.txt', 'w')
+        print >> ofile, outputString
+        print outputString
+        ofile.close()
 
 if __name__ == '__main__':
     main()
