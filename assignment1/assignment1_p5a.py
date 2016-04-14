@@ -58,7 +58,8 @@ def getPossibleActions(currentPrime):
 def getPath(startingPrime, finalPrime):
     # Initialized queue with the starting prime and the starting total cost
     # cost so far + distance to reach = 0 + heuristic
-    queue = [(startingPrime, heuristic(startingPrime, finalPrime))]
+    # also track the cost so far (index 2)
+    queue = [(startingPrime, heuristic(startingPrime, finalPrime) , 0)]
 
     # While the queue is not empty
     while queue:
@@ -68,6 +69,7 @@ def getPath(startingPrime, finalPrime):
         # if the current node is the final prime we are looking for, return
         if current[0] == finalPrime:
             print "SUCCESS"
+            print current[0]
             break
 
         # Else, we store the possible actions of the current number
@@ -85,16 +87,33 @@ def getPath(startingPrime, finalPrime):
         for i in range(0, len(childOfNode)):
             # Calculate the distance to reach for each child
             heu = heuristic(childOfNode[i], finalPrime)
+            # calculate the path length so far
+            path = current[2] + 1
             # Append it to the queue with the updated cost
-            queue.append((childOfNode[i], current[1] + 1 + heu))
+            queue.append((childOfNode[i], path + heu , path))
             # Sort the queue so it is like a priority queue
             # Sorts it by the second value, which is the cost
             queue.sort(key=operator.itemgetter(1))
 
-        print queue
-
+        #print queue
+        
+        
+    outputString = ""
+    print "This is"
+    print current[0]
+    #if finalPrime is not found
+    if current[0] != finalPrime :
+        outputString =  'UNSOLVABLE'
+    else: # print the found path
+        curPrime = finalPrime
+        outputString = str(curPrime) + ' ' +  outputString
+        while(curPrime != startingPrime):
+            curPrime = closedList[str(curPrime)]
+            outputString = str(curPrime) + ' ' + outputString
+		
     file = open('output.txt', 'w')
-    print >> file, 'UNSOLVABLE'
+    print >> file, outputString
+    print outputString
     file.close()
 
     return getPath
