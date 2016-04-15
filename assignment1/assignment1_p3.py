@@ -104,24 +104,29 @@ def getIterativePath(startPrime, finalPrime):
     else:
         current = finalPrime
         outputString = ""
-        outputString = current + " " + outputString
+        outputString = str(current) + " " + outputString
         while(current != startPrime):
             current = closedList[current]
-            outputString = current + " " + outputString
+            outputString = str(current) + " " + outputString
 	
 # 	file = open('output.txt','w')
 #  	print >> file,outputString
 # 	print(outputString)
 # 	file.close()
-    sys.stdout.write(outputString)
+    sys.stdout.write(outputString + "\n")
     return 	
 
 def main():
-	primes = str(sys.stdin.readline()).split()
-	t0 = time.time()
-	getIterativePath(primes[0], primes[1])
-	t1 = time.time()
-	#print t1 - t0
+    for line in sys.stdin.readlines():
+        primes = str(line).split()
+        first = list(primes[0])
+        second = list(primes[1])
+
+        t0 = time.time()
+        getIterativePath(int(primes[0]), int(primes[1]))
+
+        t1 = time.time()
+        # print t1 - t0
 
 if __name__ == '__main__':
 	main()

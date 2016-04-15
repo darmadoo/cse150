@@ -106,7 +106,7 @@ def getPath(startingPrime, finalPrime):
 #     print >> file, outputString
 #     print outputString
 #     file.close()
-    sys.stdout.write(outputString)
+    sys.stdout.write(outputString + "\n")
 
     return getPath
 
@@ -137,15 +137,15 @@ def newHeuristic(start, end):
     return total
 
 def main():
-    primes = str(sys.stdin.readline()).split()
-    first = list(primes[0])
-    second = list(primes[1])
-    
-    t0 = time.time()
-    getPath(int(primes[0]), int(primes[1]))
-    
-    t1 = time.time()
-    #print t1 - t0
+    for line in sys.stdin.readlines():
+        primes = str(line).split()
+        first = list(primes[0])
+        second = list(primes[1])
 
+        t0 = time.time()
+        getPath(int(primes[0]), int(primes[1]))
+
+        t1 = time.time()
+        #print t1 - t0
 if __name__ == '__main__':
     main()

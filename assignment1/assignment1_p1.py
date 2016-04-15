@@ -61,7 +61,7 @@ def getPath(startingPrime, finalPrime):
     
     if(startingPrime == finalPrime):
         outputString = str(startingPrime)
-        sys.stdout.write(outputString)
+        sys.stdout.write(outputString + "\n")
         return
 
     # if it takes only one digit to change from starting --> final prime
@@ -72,7 +72,7 @@ def getPath(startingPrime, finalPrime):
 #         print >> file, outputString
 #         print outputString
 #         file.close()
-        sys.stdout.write(outputString)
+        sys.stdout.write(outputString + "\n")
         return
 
     for i in range(0, len(frontier)): # indicate who the parent is
@@ -92,7 +92,7 @@ def getPath(startingPrime, finalPrime):
 #             print >> file, outputString
 #             print outputString
 #             file.close()
-            sys.stdout.write(outputString)
+            sys.stdout.write(outputString + "\n")
             return
 
         for i in range(0, len(childOfNode)): # indicate who the parent is
@@ -112,24 +112,22 @@ def getPath(startingPrime, finalPrime):
 #     print >> file, 'UNSOLVABLE'
 #     print "UNSOLVABLE"
 #     file.close()
-    sys.stdout.write(outputString)
+    sys.stdout.write(outputString + "\n")
 
     return getPath
 
 def main():
-    primes1 = sys.stdin.readline()
-    while(primes1):
-        primes = str(primes1).split()
+    for line in sys.stdin.readlines():
+        primes = str(line).split()
         first = list(primes[0])
         second = list(primes[1])
-        
+
         t0 = time.time()
         getPath(int(primes[0]), int(primes[1]))
-        
+
         t1 = time.time()
-        #print t1 - t0
-        primes1 = sys.stdin.readline()
-        print "aaa"
+        # print t1 - t0
+
 
 if __name__ == '__main__':
     main()

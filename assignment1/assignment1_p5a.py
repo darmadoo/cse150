@@ -105,7 +105,7 @@ def getPath(startingPrime, finalPrime):
 #     print >> file, outputString
 #     print outputString
 #     file.close()
-    sys.stdout.write(outputString)
+    sys.stdout.write(outputString + "\n")
     return getPath
 
 # Hamming distance heuristic
@@ -126,16 +126,16 @@ def heuristic(start, end):
     return count
 
 def main():
-    primes = str(sys.stdin.readline()).split()
-    first = list(primes[0])
-    second = list(primes[1])
+    for line in sys.stdin.readlines():
+        primes = str(line).split()
+        first = list(primes[0])
+        second = list(primes[1])
 
-    t0 = time.time()
-    getPath(int(primes[0]), int(primes[1]))
-    
+        t0 = time.time()
+        getPath(int(primes[0]), int(primes[1]))
 
-    t1 = time.time()
-    #print t1 - t0
+        t1 = time.time()
+        #print t1 - t0
 
 if __name__ == '__main__':
     main()
