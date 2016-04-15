@@ -56,6 +56,7 @@ def getPossibleActions(currentPrime):
 
 
 def getPath(startingPrime, finalPrime):
+    closedList.clear()
     # Initialized queue with the starting prime and the starting total cost
     # cost so far + distance to reach = 0 + heuristic
     # also track the cost so far (index 2)

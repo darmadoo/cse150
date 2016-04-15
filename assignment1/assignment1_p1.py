@@ -56,6 +56,7 @@ def getPossibleActions(currentPrime):
 
 
 def getPath(startingPrime, finalPrime):
+    closedList.clear()
     possibleAction = (getPossibleActions(startingPrime))
     frontier = possibleAction
     
