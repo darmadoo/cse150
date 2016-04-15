@@ -70,6 +70,11 @@ def getPath(startingPrime, finalPrime):
 #     print("starting number: " + str(startingPrime))
 #     print("frontier 1: " + str(frontier))
 
+    if(startingPrime == finalPrime):
+        outputString = str(startingPrime) + "\n" + str(startingPrime)
+        sys.stdout.write(outputString)
+        return
+
     # if it takes only one digit to change from starting --> final prime
     if (finalPrime in frontier):
         outputString = str(startingPrime) + " " + str(finalPrime) + "\n" + str(finalPrime)
@@ -197,10 +202,15 @@ def getPath(startingPrime, finalPrime):
 
 def main():
     primes = str(sys.stdin.readline()).split()
-    t0 = time.time()
-    getPath(int(primes[0]), int(primes[1]))
-    t1 = time.time()
-    #print t1 - t0
+    
+    while(primes):
+        t0 = time.time()
+        getPath(int(primes[0]), int(primes[1]))
+        t1 = time.time()
+        #print t1 - t0
+        primes = str(sys.stdin.readline()).split()
+    
+    
 
 if __name__ == '__main__':
     main()

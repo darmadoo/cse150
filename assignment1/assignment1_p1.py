@@ -58,6 +58,11 @@ def getPossibleActions(currentPrime):
 def getPath(startingPrime, finalPrime):
     possibleAction = (getPossibleActions(startingPrime))
     frontier = possibleAction
+    
+    if(startingPrime == finalPrime):
+        outputString = str(startingPrime)
+        sys.stdout.write(outputString)
+        return
 
     # if it takes only one digit to change from starting --> final prime
     if (finalPrime in frontier):
@@ -112,15 +117,19 @@ def getPath(startingPrime, finalPrime):
     return getPath
 
 def main():
-    primes = str(sys.stdin.readline()).split()
-    first = list(primes[0])
-    second = list(primes[1])
-    
-    t0 = time.time()
-    getPath(int(primes[0]), int(primes[1]))
-    
-    t1 = time.time()
-    #print t1 - t0
+    primes1 = sys.stdin.readline()
+    while(primes1):
+        primes = str(primes1).split()
+        first = list(primes[0])
+        second = list(primes[1])
+        
+        t0 = time.time()
+        getPath(int(primes[0]), int(primes[1]))
+        
+        t1 = time.time()
+        #print t1 - t0
+        primes1 = sys.stdin.readline()
+        print "aaa"
 
 if __name__ == '__main__':
     main()
