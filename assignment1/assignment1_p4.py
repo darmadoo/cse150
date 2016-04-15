@@ -1,5 +1,6 @@
 __author__ = 'mdarmadi@ucsd.edu, A11410141, hdharmaw@ucsd.edu, A91413023, vcchandr@ucsd.edu, A12496582'
 import sys
+import time
 
 closedList = {} # closedList is going to be a dictionary showing the parent of number
 closedList2 = {} # closedList from the final prime
@@ -191,15 +192,11 @@ def getPath(startingPrime, finalPrime):
     return getPath
 
 def main():
-    # Replacing number in int ex. from 103 -> 203
-    j = 103
-    numj = str(j)
-    listj = list(numj)
-    listj[0] = '2'
-    numj = ''.join(listj)
-
     primes = str(sys.stdin.readline()).split()
+    t0 = time.time()
     getPath(int(primes[0]), int(primes[1]))
+    t1 = time.time()
+    print t1 - t0
 
 if __name__ == '__main__':
     main()
