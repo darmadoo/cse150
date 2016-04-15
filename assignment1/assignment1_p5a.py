@@ -1,4 +1,4 @@
-__author__ = 'mdarmadi@ucsd.edu, A11410141, '
+__author__ = 'mdarmadi@ucsd.edu, A11410141, hdharmaw@ucsd.edu, A91413023, vcchandr@ucsd.edu, A12496582'
 import sys
 import operator
 import time

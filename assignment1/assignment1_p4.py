@@ -1,4 +1,4 @@
-__author__ = 'mdarmadi@ucsd.edu, A11410141, '
+__author__ = 'mdarmadi@ucsd.edu, A11410141, hdharmaw@ucsd.edu, A91413023, vcchandr@ucsd.edu, A12496582'
 import sys
 
 closedList = {} # closedList is going to be a dictionary showing the parent of number
@@ -66,6 +66,9 @@ def getPath(startingPrime, finalPrime):
     possibleAction = (getPossibleActions(startingPrime, True))
     frontier = possibleAction
 
+    print("starting number: " + str(startingPrime))
+    print("frontier 1: " + str(frontier))
+
     # if it takes only one digit to change from starting --> final prime
     if (finalPrime in frontier):
         outputString = str(startingPrime) + " " + str(finalPrime) + "\n" + str(finalPrime)
@@ -77,26 +80,43 @@ def getPath(startingPrime, finalPrime):
 
     for i in range(0, len(frontier)): # indicate who the parent is
         closedList[frontier[i]] = startingPrime
+    closedList[startingPrime] = startingPrime
+
+
+
+    frontier2 = getPossibleActions(finalPrime, False)
+    print("frontier 2: " + str(frontier2))
+
+    for i in range(0, len(frontier2)):  # indicate who the parent is
+        closedList2[frontier2[i]] = finalPrime
+    closedList2[finalPrime] = finalPrime
 
     while (frontier or frontier2): # until no discoverable nodes from both sides
         # STARTING FROM THE BACK
-        if frontier2: # if final prime still has decendants
+        if frontier2: # if final prime still has descendants
             currentNode = frontier2[0]
             childOfNode = getPossibleActions(currentNode, False) # indicate that it is from the back
 
+            print("currentNode: " + str(currentNode))
+            print("child of nodes HERE: " + str(childOfNode))
+
             for i in range(0, len(childOfNode)):
                 if (childOfNode[i] in closedList):
-                    copyCurrent = currentNode
+                    print("found child of node: " + str(childOfNode[i]))
+                    copyCurrent = currentNode # for backtracking until finish prime
+                    currentNode = childOfNode[i]
                     line1 = ""
-                    line2 = ""
+                    line2 = str(childOfNode[i])
                     while currentNode != startingPrime: # backtrack starting prime
                         line1 = str(currentNode) + " " + line1
                         currentNode = closedList[currentNode]
                     line1 = str(startingPrime) + " " + line1
+                    print("get here 1")
                     while copyCurrent != finalPrime: # backtrack final prime
                         line2 = str(copyCurrent) + " " + line2
                         copyCurrent = closedList2[copyCurrent]
                     line2 = str(finalPrime) + " " + line2
+                    print("get here 2")
 
                     file = open('output.txt', 'w')
                     print >> file, line1 + "\n" + line2
@@ -108,29 +128,38 @@ def getPath(startingPrime, finalPrime):
 
             frontier2.remove(currentNode)
 
-            additionalNodes = childOfNode
-            for i in range(0, len(childOfNode)):
-                if (childOfNode[i] in frontier2):
-                    additionalNodes.remove(childOfNode[i])
+            additionalNodes = childOfNode[:]
+            print("")
+            print("child of nodes: " + str(childOfNode))
+            print("additional nodes: " + str(additionalNodes))
+            for k in range(0, len(childOfNode)):
+                if (childOfNode[k] in frontier2):
+                    additionalNodes.remove(childOfNode[k])
 
             for i in range(0, len(additionalNodes)):
                 frontier2.append(additionalNodes[i])
 
+            print("frontier 2: " + str(frontier2))
 
         if frontier:
             # CHECK FROM FRONT
             currentNode = frontier[0]
             childOfNode = getPossibleActions(currentNode, True)
 
+            print("current Node: " + str(currentNode))
+            print("child Of Nodeee: " + str(childOfNode))
+
             for i in range(0, len(childOfNode)):
                 if (childOfNode[i] in closedList2): # if we can find the final prime
-                    copyCurrent = currentNode
-                    line1 = ""
+                    print("found child of node: " + str(childOfNode[i]))
+                    copyCurrent = childOfNode[i]
+                    line1 = str(childOfNode[i])
                     line2 = ""
                     while currentNode != startingPrime:  # backtrack starting prime
                         line1 = str(currentNode) + " " + line1
                         currentNode = closedList[currentNode]
                     line1 = str(startingPrime) + " " + line1
+                    print("copy current: " + str(copyCurrent))
                     while copyCurrent != finalPrime:  # backtrack final prime
                         line2 = str(copyCurrent) + " " + line2
                         copyCurrent = closedList2[copyCurrent]
@@ -146,7 +175,7 @@ def getPath(startingPrime, finalPrime):
 
             frontier.remove(currentNode)
 
-            additionalNodes = childOfNode
+            additionalNodes = childOfNode[:]
             for i in range(0, len(childOfNode)):
                 if (childOfNode[i] in frontier):
                     additionalNodes.remove(childOfNode[i])
