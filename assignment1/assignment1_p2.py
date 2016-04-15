@@ -64,7 +64,7 @@ def getPath(startingPrime, finalPrime):
         a = stack.get()
 
 		#if a.currentPrime == finalPrime
-        if(a[0] == finalPrime):
+        if(a[0] == str(finalPrime)):
             break
 		#else if a.depth >= 5
         elif(a[1] >= 5):
@@ -80,7 +80,7 @@ def getPath(startingPrime, finalPrime):
             stack.put((str(neighbor[i]),a[1] + 1))
 	
 	#if(currentPRime != finalPrime)
-    if(a[0] != finalPrime):
+    if(a[0] != str(finalPrime)):
 		#unsolvable
         outputString = 'UNSOLVABLE'
 		
@@ -89,7 +89,7 @@ def getPath(startingPrime, finalPrime):
         outputString = ""
         outputString = str(current) + " " + outputString
         while(current != startingPrime):
-            current = closedList[current]
+            current = closedList[str(current)]
             outputString = str(current) + " " + outputString
 # 		outputString = startingPrime + " " + outputString
 	
@@ -100,15 +100,16 @@ def getPath(startingPrime, finalPrime):
     return 
 
 def main():
-    for line in sys.stdin.readlines():
-        primes = str(line).split()
-        first = list(primes[0])
-        second = list(primes[1])
-
-        t0 = time.time()
-        getPath(int(primes[0]), int(primes[1]))
-
-        t1 = time.time()
+    #for line in sys.stdin.readlines():
+    line = sys.stdin.readline()
+    primes = str(line).split()
+    first = list(primes[0])
+    second = list(primes[1])
+        
+    t0 = time.time()
+    getPath(int(primes[0]), int(primes[1]))
+        
+    t1 = time.time()
         #print t1 - t0
 if __name__ == '__main__':
 	main()

@@ -68,7 +68,7 @@ def getPath(startingPrime, finalPrime,depth):
         a = stack.get()
 
 		#if a.currentPrime == finalPrime
-        if(a[0] == finalPrime):
+        if(a[0] == str(finalPrime)):
             break
 		#else if a.depth >= 5
         elif(a[1] >= depth):
@@ -85,7 +85,7 @@ def getPath(startingPrime, finalPrime,depth):
 		
 	
 	#if(currentPRime != finalPrime)
-    if(a[0] != finalPrime):
+    if(a[0] != str(finalPrime)):
 		#unsolvable
         return False		
     else:
@@ -106,7 +106,7 @@ def getIterativePath(startPrime, finalPrime):
         outputString = ""
         outputString = str(current) + " " + outputString
         while(current != startPrime):
-            current = closedList[current]
+            current = closedList[str(current)]
             outputString = str(current) + " " + outputString
 	
 # 	file = open('output.txt','w')
@@ -118,13 +118,14 @@ def getIterativePath(startPrime, finalPrime):
 
 def main():
     for line in sys.stdin.readlines():
+    # line = sys.stdin.readline()
         primes = str(line).split()
         first = list(primes[0])
         second = list(primes[1])
-
+    
         t0 = time.time()
         getIterativePath(int(primes[0]), int(primes[1]))
-
+    
         t1 = time.time()
         # print t1 - t0
 
