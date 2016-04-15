@@ -55,70 +55,73 @@ def getPossibleActions(currentPrime):
 def getPath(startingPrime, finalPrime,depth):
 	# your code here
 	#reset the closed list for fresh search
-	closedList.clear()	
+    closedList.clear()	
 	#declare stack
-	stack = LifoQueue()
+    stack = LifoQueue()
 	
 	#push <startingPrime (currentPrime), 0 (depth)> into the stack
-	stack.put((startingPrime , 0))
+    stack.put((startingPrime , 0))
 	
 	#while stack is not empty 
-	while(not stack.empty()):
+    while(not stack.empty()):
 		#pop a from stack
-		a = stack.get()
+        a = stack.get()
 
 		#if a.currentPrime == finalPrime
-		if(a[0] == finalPrime):
-			break
+        if(a[0] == finalPrime):
+            break
 		#else if a.depth >= 5
-		elif(a[1] >= depth):
-			continue
+        elif(a[1] >= depth):
+            continue
 		
 		#find all neighbor of currentPrime
-		neighbor = getPossibleActions(a[0])
+        neighbor = getPossibleActions(a[0])
 		
-		for i in range(0,len(neighbor)):
+        for i in range(0,len(neighbor)):
 			#set the parent of the neighbor to currentPrime
-			closedList[str(neighbor[i])] = a[0]
+            closedList[str(neighbor[i])] = a[0]
 			#push all neighbor as <neighbor,a.depth + 1> into the stack
-			stack.put((str(neighbor[i]),a[1] + 1))
+            stack.put((str(neighbor[i]),a[1] + 1))
 		
 	
 	#if(currentPRime != finalPrime)
-	if(a[0] != finalPrime):
+    if(a[0] != finalPrime):
 		#unsolvable
-		return False		
-	else:
-		return True
+        return False		
+    else:
+        return True
 
 def getIterativePath(startPrime, finalPrime):
-	for i in range(0, MAXDEPTH+1):
-		result = getPath(startPrime, finalPrime, i)
-		if(result):
-			break
+    for i in range(0, MAXDEPTH+1):
+        result = getPath(startPrime, finalPrime, i)
+        if(result):
+            break
+        
+        
+        
+    if(result == False):
+        outputString = 'UNSOLVABLE'
+    else:
+        current = finalPrime
+        outputString = ""
+        outputString = current + " " + outputString
+        while(current != startPrime):
+            current = closedList[current]
+            outputString = current + " " + outputString
 	
-	if(result == False):
-		outputString = 'UNSOLVABLE'
-	else:
-		current = finalPrime
-		outputString = ""
-		outputString = current + " " + outputString
-		while(current != startPrime):
-			current = closedList[current]
-			outputString = current + " " + outputString
-	
-	file = open('output.txt','w')
- 	print >> file,outputString
-	print(outputString)
-	file.close()
-	return 	
+# 	file = open('output.txt','w')
+#  	print >> file,outputString
+# 	print(outputString)
+# 	file.close()
+    sys.stdout.write(outputString)
+    return 	
 
 def main():
 	primes = str(sys.stdin.readline()).split()
 	t0 = time.time()
 	getIterativePath(primes[0], primes[1])
 	t1 = time.time()
-	print t1 - t0
+	#print t1 - t0
 
 if __name__ == '__main__':
 	main()

@@ -1,3 +1,4 @@
+from test.test_MimeWriter import OUTPUT
 __author__ = 'mdarmadi@ucsd.edu, A11410141, hdharmaw@ucsd.edu, A91413023, vcchandr@ucsd.edu, A12496582'
 import sys
 from Queue import LifoQueue
@@ -52,57 +53,58 @@ def getPath(startingPrime, finalPrime):
 	# your code here
 	#depth limit is 5	
 	#declare stack
-	stack = LifoQueue()
+    stack = LifoQueue()
 	
 	#push <startingPrime (currentPrime), 0 (depth)> into the stack
-	stack.put((startingPrime , 0))
+    stack.put((startingPrime , 0))
 	
 	#while stack is not empty 
-	while(not stack.empty()):
+    while(not stack.empty()):
 		#pop a from stack
-		a = stack.get()
+        a = stack.get()
 
 		#if a.currentPrime == finalPrime
-		if(a[0] == finalPrime):
-			break
+        if(a[0] == finalPrime):
+            break
 		#else if a.depth >= 5
-		elif(a[1] >= 5):
-			continue
+        elif(a[1] >= 5):
+            continue
 		
 		#find all neighbor of currentPrime
-		neighbor = getPossibleActions(a[0])
+        neighbor = getPossibleActions(a[0])
 		
-		for i in range(0,len(neighbor)):
+        for i in range(0,len(neighbor)):
 			#set the parent of the neighbor to currentPrime
-			closedList[str(neighbor[i])] = a[0]
+            closedList[str(neighbor[i])] = a[0]
 			#push all neighbor as <neighbor,a.depth + 1> into the stack
-			stack.put((str(neighbor[i]),a[1] + 1))
+            stack.put((str(neighbor[i]),a[1] + 1))
 	
 	#if(currentPRime != finalPrime)
-	if(a[0] != finalPrime):
+    if(a[0] != finalPrime):
 		#unsolvable
-		outputString = 'UNSOLVABLE'
+        outputString = 'UNSOLVABLE'
 		
-	else:
-		current = a[0]
-		outputString = ""
-		outputString = current + " " + outputString
-		while(current != startingPrime):
-			current = closedList[current]
-			outputString = current + " " + outputString
+    else:
+        current = a[0]
+        outputString = ""
+        outputString = current + " " + outputString
+        while(current != startingPrime):
+            current = closedList[current]
+            outputString = current + " " + outputString
 # 		outputString = startingPrime + " " + outputString
 	
-	file = open('output.txt','w')
- 	print >> file,outputString
-	file.close()
-	return 
+#     file = open('output.txt','w')
+#     print >> file,outputString
+#     file.close()
+    sys.stdout.write(outputString)
+    return 
 
 def main():
 	primes = str(sys.stdin.readline()).split()
 	t0 = time.time()
 	getPath(primes[0], primes[1])
 	t1 = time.time()
-	print t1 - t0
+	#print t1 - t0
 
 if __name__ == '__main__':
 	main()

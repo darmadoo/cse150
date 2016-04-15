@@ -101,11 +101,11 @@ def getPath(startingPrime, finalPrime):
             curPrime = closedList[str(curPrime)]
             outputString = str(curPrime) + ' ' + outputString
 		
-    file = open('output.txt', 'w')
-    print >> file, outputString
-    print outputString
-    file.close()
-
+#     file = open('output.txt', 'w')
+#     print >> file, outputString
+#     print outputString
+#     file.close()
+    sys.stdout.write(outputString)
     return getPath
 
 # Hamming distance heuristic
@@ -129,18 +129,13 @@ def main():
     primes = str(sys.stdin.readline()).split()
     first = list(primes[0])
     second = list(primes[1])
-    if len(first) - len(second) == 0:
-        t0 = time.time()
-        getPath(int(primes[0]), int(primes[1]))
-    else:
-        outputString = 'UNSOLVABLE'
-        ofile = open('output.txt', 'w')
-        print >> ofile, outputString
-        print outputString
-        ofile.close()
+
+    t0 = time.time()
+    getPath(int(primes[0]), int(primes[1]))
+    
 
     t1 = time.time()
-    print t1 - t0
+    #print t1 - t0
 
 if __name__ == '__main__':
     main()

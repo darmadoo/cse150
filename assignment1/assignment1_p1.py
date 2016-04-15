@@ -63,10 +63,11 @@ def getPath(startingPrime, finalPrime):
     if (finalPrime in frontier):
         outputString = str(startingPrime) + " " + str(finalPrime)
 
-        file = open('output.txt', 'w')
-        print >> file, outputString
-        print outputString
-        file.close()
+#         file = open('output.txt', 'w')
+#         print >> file, outputString
+#         print outputString
+#         file.close()
+        sys.stdout.write(outputString)
         return
 
     for i in range(0, len(frontier)): # indicate who the parent is
@@ -82,10 +83,11 @@ def getPath(startingPrime, finalPrime):
                 outputString = str(currentNode) + " " + outputString
                 currentNode = closedList[currentNode]
             outputString = str(startingPrime) + " " + outputString
-            file = open('output.txt', 'w')
-            print >> file, outputString
-            print outputString
-            file.close()
+#             file = open('output.txt', 'w')
+#             print >> file, outputString
+#             print outputString
+#             file.close()
+            sys.stdout.write(outputString)
             return
 
         for i in range(0, len(childOfNode)): # indicate who the parent is
@@ -101,10 +103,11 @@ def getPath(startingPrime, finalPrime):
         for i in range(0, len(additionalNodes)):
             frontier.append(additionalNodes[i])
 
-    file = open('output.txt', 'w')
-    print >> file, 'UNSOLVABLE'
-    print "UNSOLVABLE"
-    file.close()
+#     file = open('output.txt', 'w')
+#     print >> file, 'UNSOLVABLE'
+#     print "UNSOLVABLE"
+#     file.close()
+    sys.stdout.write(outputString)
 
     return getPath
 
@@ -112,17 +115,12 @@ def main():
     primes = str(sys.stdin.readline()).split()
     first = list(primes[0])
     second = list(primes[1])
-    if len(first) - len(second) == 0:
-        t0 = time.time()
-        getPath(int(primes[0]), int(primes[1]))
-    else:
-        outputString = 'UNSOLVABLE'
-        ofile = open('output.txt', 'w')
-        print >> ofile, outputString
-        print outputString
-        ofile.close()
+    
+    t0 = time.time()
+    getPath(int(primes[0]), int(primes[1]))
+    
     t1 = time.time()
-    print t1 - t0
+    #print t1 - t0
 
 if __name__ == '__main__':
     main()

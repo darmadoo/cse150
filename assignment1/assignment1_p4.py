@@ -67,16 +67,17 @@ def getPath(startingPrime, finalPrime):
     possibleAction = (getPossibleActions(startingPrime, True))
     frontier = possibleAction
 
-    print("starting number: " + str(startingPrime))
-    print("frontier 1: " + str(frontier))
+#     print("starting number: " + str(startingPrime))
+#     print("frontier 1: " + str(frontier))
 
     # if it takes only one digit to change from starting --> final prime
     if (finalPrime in frontier):
         outputString = str(startingPrime) + " " + str(finalPrime) + "\n" + str(finalPrime)
 
-        file = open('output.txt', 'w')
-        file.write(outputString)
-        file.close()
+#         file = open('output.txt', 'w')
+#         file.write(outputString)
+#         file.close()
+        sys.stdout.write(outputString)
         return
 
     for i in range(0, len(frontier)): # indicate who the parent is
@@ -86,7 +87,7 @@ def getPath(startingPrime, finalPrime):
 
 
     frontier2 = getPossibleActions(finalPrime, False)
-    print("frontier 2: " + str(frontier2))
+    #print("frontier 2: " + str(frontier2))
 
     for i in range(0, len(frontier2)):  # indicate who the parent is
         closedList2[frontier2[i]] = finalPrime
@@ -98,12 +99,12 @@ def getPath(startingPrime, finalPrime):
             currentNode = frontier2[0]
             childOfNode = getPossibleActions(currentNode, False) # indicate that it is from the back
 
-            print("currentNode: " + str(currentNode))
-            print("child of nodes HERE: " + str(childOfNode))
+#             print("currentNode: " + str(currentNode))
+#             print("child of nodes HERE: " + str(childOfNode))
 
             for i in range(0, len(childOfNode)):
                 if (childOfNode[i] in closedList):
-                    print("found child of node: " + str(childOfNode[i]))
+                    #print("found child of node: " + str(childOfNode[i]))
                     copyCurrent = currentNode # for backtracking until finish prime
                     currentNode = childOfNode[i]
                     line1 = ""
@@ -112,16 +113,17 @@ def getPath(startingPrime, finalPrime):
                         line1 = str(currentNode) + " " + line1
                         currentNode = closedList[currentNode]
                     line1 = str(startingPrime) + " " + line1
-                    print("get here 1")
+                    #print("get here 1")
                     while copyCurrent != finalPrime: # backtrack final prime
                         line2 = str(copyCurrent) + " " + line2
                         copyCurrent = closedList2[copyCurrent]
                     line2 = str(finalPrime) + " " + line2
-                    print("get here 2")
+                    #print("get here 2")
 
-                    file = open('output.txt', 'w')
-                    print >> file, line1 + "\n" + line2
-                    file.close()
+#                     file = open('output.txt', 'w')
+#                     print >> file, line1 + "\n" + line2
+#                     file.close()
+                    sys.stdout.write(line1 + "\n" + line2)
                     return
 
             for i in range(0, len(childOfNode)):  # indicate who the parent is
@@ -130,9 +132,9 @@ def getPath(startingPrime, finalPrime):
             frontier2.remove(currentNode)
 
             additionalNodes = childOfNode[:]
-            print("")
-            print("child of nodes: " + str(childOfNode))
-            print("additional nodes: " + str(additionalNodes))
+#             print("")
+#             print("child of nodes: " + str(childOfNode))
+#             print("additional nodes: " + str(additionalNodes))
             for k in range(0, len(childOfNode)):
                 if (childOfNode[k] in frontier2):
                     additionalNodes.remove(childOfNode[k])
@@ -140,19 +142,19 @@ def getPath(startingPrime, finalPrime):
             for i in range(0, len(additionalNodes)):
                 frontier2.append(additionalNodes[i])
 
-            print("frontier 2: " + str(frontier2))
+            #print("frontier 2: " + str(frontier2))
 
         if frontier:
             # CHECK FROM FRONT
             currentNode = frontier[0]
             childOfNode = getPossibleActions(currentNode, True)
 
-            print("current Node: " + str(currentNode))
-            print("child Of Nodeee: " + str(childOfNode))
+#             print("current Node: " + str(currentNode))
+#             print("child Of Nodeee: " + str(childOfNode))
 
             for i in range(0, len(childOfNode)):
                 if (childOfNode[i] in closedList2): # if we can find the final prime
-                    print("found child of node: " + str(childOfNode[i]))
+#                     print("found child of node: " + str(childOfNode[i]))
                     copyCurrent = childOfNode[i]
                     line1 = str(childOfNode[i])
                     line2 = ""
@@ -160,15 +162,16 @@ def getPath(startingPrime, finalPrime):
                         line1 = str(currentNode) + " " + line1
                         currentNode = closedList[currentNode]
                     line1 = str(startingPrime) + " " + line1
-                    print("copy current: " + str(copyCurrent))
+#                     print("copy current: " + str(copyCurrent))
                     while copyCurrent != finalPrime:  # backtrack final prime
                         line2 = str(copyCurrent) + " " + line2
                         copyCurrent = closedList2[copyCurrent]
                     line2 = str(finalPrime) + " " + line2
 
-                    file = open('output.txt', 'w')
-                    print >> file, line1 + "\n" + line2
-                    file.close()
+#                     file = open('output.txt', 'w')
+#                     print >> file, line1 + "\n" + line2
+#                     file.close()
+                    sys.stdout.write(line1 + "\n" + line2)
                     return
 
             for i in range(0, len(childOfNode)): # indicate who the parent is
@@ -185,9 +188,10 @@ def getPath(startingPrime, finalPrime):
                 frontier.append(additionalNodes[i])
 
 
-    file = open('output.txt', 'w')
-    print >> file, 'UNSOLVABLE'
-    file.close()
+#     file = open('output.txt', 'w')
+#     print >> file, 'UNSOLVABLE'
+#     file.close()
+    sys.stdout.write('UNSOLVABLE')
 
     return getPath
 
@@ -196,7 +200,7 @@ def main():
     t0 = time.time()
     getPath(int(primes[0]), int(primes[1]))
     t1 = time.time()
-    print t1 - t0
+    #print t1 - t0
 
 if __name__ == '__main__':
     main()
