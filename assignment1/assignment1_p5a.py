@@ -58,6 +58,7 @@ def getPath(startingPrime, finalPrime):
     # Initialized queue with the starting prime and the starting total cost
     # cost so far + distance to reach = 0 + heuristic
     # also track the cost so far (index 2)
+    closedList.clear()
     queue = [(startingPrime, heuristic(startingPrime, finalPrime) , 0)]
 
     # While the queue is not empty

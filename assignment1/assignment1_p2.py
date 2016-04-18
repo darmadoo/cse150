@@ -1,7 +1,7 @@
 from test.test_MimeWriter import OUTPUT
 __author__ = 'mdarmadi@ucsd.edu, A11410141, hdharmaw@ucsd.edu, A91413023, vcchandr@ucsd.edu, A12496582'
 import sys
-from Queue import LifoQueue
+from Queue  import LifoQueue
 import time
 closedList = {} # closedList is going to be a dictionary showing the parent of number
 
@@ -50,13 +50,21 @@ def getPossibleActions(currentPrime):
     return listOfPrimes
 
 def getPath(startingPrime, finalPrime):
+    # print(type(startingPrime))
+    # print("starting Prime: " + str(startingPrime))
+    # print(type(finalPrime))
+    # print("final Prime: " + str(finalPrime))
+
 	# your code here
 	#depth limit is 5	
 	#declare stack
+    closedList.clear()
     stack = LifoQueue()
 	
 	#push <startingPrime (currentPrime), 0 (depth)> into the stack
     stack.put((startingPrime , 0))
+
+    outputString = ""
 	
 	#while stack is not empty 
     while(not stack.empty()):
@@ -64,8 +72,9 @@ def getPath(startingPrime, finalPrime):
         a = stack.get()
 
 		#if a.currentPrime == finalPrime
-        if(a[0] == str(finalPrime)):
+        if(a[0] == finalPrime):
             break
+
 		#else if a.depth >= 5
         elif(a[1] >= 5):
             continue
@@ -77,13 +86,13 @@ def getPath(startingPrime, finalPrime):
 			#set the parent of the neighbor to currentPrime
             closedList[str(neighbor[i])] = a[0]
 			#push all neighbor as <neighbor,a.depth + 1> into the stack
-            stack.put((str(neighbor[i]),a[1] + 1))
+            stack.put((neighbor[i],a[1] + 1))
 	
-	#if(currentPRime != finalPrime)
-    if(a[0] != str(finalPrime)):
-		#unsolvable
+    #if(currentPRime != finalPrime)
+    if(a[0] != finalPrime):
+        #unsolvable
         outputString = 'UNSOLVABLE'
-		
+
     else:
         current = a[0]
         outputString = ""
@@ -92,7 +101,7 @@ def getPath(startingPrime, finalPrime):
             current = closedList[str(current)]
             outputString = str(current) + " " + outputString
 # 		outputString = startingPrime + " " + outputString
-	
+
 #     file = open('output.txt','w')
 #     print >> file,outputString
 #     file.close()
@@ -100,16 +109,16 @@ def getPath(startingPrime, finalPrime):
     return 
 
 def main():
-    #for line in sys.stdin.readlines():
-    line = sys.stdin.readline()
-    primes = str(line).split()
-    first = list(primes[0])
-    second = list(primes[1])
-        
-    t0 = time.time()
-    getPath(int(primes[0]), int(primes[1]))
-        
-    t1 = time.time()
+    for line in sys.stdin.readlines():
+    #line = sys.stdin.readline()
+        primes = str(line).split()
+        first = list(primes[0])
+        second = list(primes[1])
+
+        t0 = time.time()
+        getPath(int(primes[0]), int(primes[1]))
+
+        t1 = time.time()
         #print t1 - t0
 if __name__ == '__main__':
 	main()
