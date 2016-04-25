@@ -34,7 +34,7 @@ class MinimaxPlayer(Player):
 
         v = sys.maxint
 
-        print state.actions()
+        #print state.actions()
         if not state.actions():
             v = min(v, self.maxVal(state.result(None)))
         else:

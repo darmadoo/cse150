@@ -6,6 +6,9 @@ from assignment2 import Player, State, Action
 import sys
 
 class AlphaBetaPlayer(Player):
+
+    nextState = None
+
     def move(self, state):
         """Calculates the best move from the given board using the minimax
         algorithm with alpha-beta pruning and transposition table.
@@ -16,19 +19,18 @@ class AlphaBetaPlayer(Player):
         raise NotImplementedError("Need to implement this method")
 
     def abSearch(self, state):
-        best_act = None
-        best_v = -sys.maxint
+        global nextState
 
-        for actions in state.actions():
-            t = self.maxVal(state.result(actions), -sys.maxint, sys.maxint)
-            if best_v < t:
-                best_v = t
-                best_act = actions
+        self.maxVal(state, -sys.maxint, sys.maxint)
+
+        best_act = nextState
 
         return best_act
 
 
     def maxVal(self, state, alpha, beta):
+        global nextState
+
         if state.is_terminal():
             return state.utility(self)
 
@@ -41,11 +43,16 @@ class AlphaBetaPlayer(Player):
                 v = max(v, self.minVal(state.result(a), alpha, beta))
                 if v >= beta:
                     return v
+                if (v > alpha):
+                    nextState = a
                 alpha = max(v, alpha)
+
 
         return v
 
     def minVal(self, state, alpha, beta):
+        global nextState
+
         if state.is_terminal():
             return state.utility(self)
 
