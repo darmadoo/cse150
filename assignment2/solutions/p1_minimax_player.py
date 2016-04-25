@@ -31,7 +31,7 @@ class MinimaxPlayer(Player):
         return best_act
 
     def minVal(self, state):
-        if state.is_win():
+        if state.is_terminal():
             print "won"
             return state.utility(self)
 
@@ -46,7 +46,7 @@ class MinimaxPlayer(Player):
         return v
 
     def maxVal(self, state):
-        if state.is_win():
+        if state.is_terminal():
             print "won"
             return state.utility(self)
 
