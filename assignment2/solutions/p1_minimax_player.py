@@ -20,42 +20,39 @@ class MinimaxPlayer(Player):
         best_v = -sys.maxint
 
         for actions in state.actions():
-            v = self.minVal(state.result(actions))
-            if best_v < v:
-                best_v = v
+            t = self.minVal(state.result(actions))
+
+            if best_v < t:
+                best_v = t
                 best_act = actions
 
-        print "FINAL"
-        print best_act
-        print best_v
         return best_act
 
     def minVal(self, state):
         if state.is_terminal():
-            print "won"
             return state.utility(self)
 
         v = sys.maxint
 
+        print state.actions()
         if not state.actions():
-            state.result(None)
+            v = min(v, self.maxVal(state.result(None)))
         else:
             for a in state.actions():
-                min(self.maxVal(state.result(a)), v)
+                v = min(v, self.maxVal(state.result(a)))
 
         return v
 
     def maxVal(self, state):
         if state.is_terminal():
-            print "won"
             return state.utility(self)
 
         v = -sys.maxint
 
         if not state.actions():
-            state.result(None)
+            v = max(v, self.minVal(state.result(None)))
         else:
             for a in state.actions():
-                max(self.minVal(state.result(a)), v)
+                v = max(v, self.minVal(state.result(a)))
 
         return v
