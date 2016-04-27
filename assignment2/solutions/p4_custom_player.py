@@ -53,8 +53,7 @@ class CustomAgentPlayer(Player):
 
         return best_act
 
-
-        raise NotImplementedError("Need to implement this method")
+        # raise NotImplementedError("Need to implement this method")
 
 
     def maxVal(self, state, depth, alpha, beta):
