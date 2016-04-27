@@ -48,7 +48,7 @@ class EvaluationPlayer(Player):
         for i in range((state.player_goal_idx + 1), (state.opponent_goal_idx)):
             stonesYourSide += state.board[i]
 
-        result = (1/(2*m*n))*(goalStone-oppStones+stonesYourSide-stonesOppSide)
+        result = (1 / (2 * m * n)) * (goalStone - oppStones + stonesYourSide - stonesOppSide)
 
         return result
         # raise NotImplementedError("Need to implement this method")
