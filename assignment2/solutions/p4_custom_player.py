@@ -47,6 +47,14 @@ class CustomAgentPlayer(Player):
                 util = self.maxVal(state.result(action), d + 1, -sys.maxint, sys.maxint)
                 self.aTable[action] = util
 
+        # go through the action table to find the best move
+        for action in self.aTable:
+            if (self.aTable.get(action) > best_v):
+                best_v = self.aTable.get(action)
+                best_act = action
+
+        return best_act
+
 
         raise NotImplementedError("Need to implement this method")
 
@@ -77,6 +85,7 @@ class CustomAgentPlayer(Player):
 
                 if v >= beta:
                     return v
+
                 if (v > alpha):
                     nextState = a
                 alpha = max(v, alpha)
@@ -84,14 +93,14 @@ class CustomAgentPlayer(Player):
         return v
 
     def minVal(self, state, depth, alpha, beta):
-        global nextState
+        global nextState, DEPTH
 
         # if time's up
         if self.is_time_up() or depth >= DEPTH:
             return - self.evaluate(state, self.player_row)
 
         if state.is_terminal():
-            self.tTable[state] = state.utility(self) # add to transposition table
+            self.tTable[state] = state.utility(self)  # add to transposition table
             return state.utility(self)
 
         v = sys.maxint
@@ -100,9 +109,15 @@ class CustomAgentPlayer(Player):
             v = min(v, self.maxVal(state.result(None), alpha, beta))
         else:
             for a in state.actions():
-                v = min(v, self.maxVal(state.result(a), alpha, beta))
+                if not self.tTable.get(state.result(a)) is None:
+                    v = min(v, self.tTable[state.result(a)])
+
+                else:
+                    v = min(v, self.maxVal(state.result(a), depth + 1,  alpha, beta))
+
                 if v <= alpha:
                     return v
+
                 beta = min(v, beta)
 
         return v
