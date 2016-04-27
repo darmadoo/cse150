@@ -6,12 +6,11 @@ __author__ = 'hdharmaw@ucsd.edu, A91413023, mdarmadi@ucsd.edu, A11410141, vcchan
 from assignment2 import Player, State, Action
 import sys
 
+DEPTH = 5  # customizable depth
 
 class CustomAgentPlayer(Player):
     """The custom player implementation.
     """
-
-    DEPTH = 5 # customizable depth
 
     def __init__(self):
         """Called when the Player object is initialized. You can use this to
@@ -41,10 +40,9 @@ class CustomAgentPlayer(Player):
 
         for d in range(1, DEPTH):
             actions = state.actions()
-            best_act = actions[0]
 
             for action in actions:
-                util = self.maxVal(state.result(action), d + 1, -sys.maxint, sys.maxint)
+                util = self.minVal(state.result(action), d + 1, -sys.maxint, sys.maxint)
                 self.aTable[action] = util
 
         # go through the action table to find the best move
@@ -64,7 +62,7 @@ class CustomAgentPlayer(Player):
 
         # if time's up
         if self.is_time_up() or depth >= DEPTH:
-            return self.evaluate(state, self.player_row)
+            return self.evaluate(state, state.player_row)
 
         if state.is_terminal():
             self.tTable[state] = state.utility(self) # add to transposition table
@@ -97,7 +95,7 @@ class CustomAgentPlayer(Player):
 
         # if time's up
         if self.is_time_up() or depth >= DEPTH:
-            return - self.evaluate(state, self.player_row)
+            return - self.evaluate(state, state.player_row)
 
         if state.is_terminal():
             self.tTable[state] = state.utility(self)  # add to transposition table
