@@ -35,6 +35,7 @@ class EvaluationPlayer(Player):
         """
         Evaluates the state for the player with the given row
         """
+
         goalStone = state.board[state.opponent_goal_idx]
         oppStones = state.board[state.player_goal_idx]
         stonesYourSide = 0
@@ -42,11 +43,16 @@ class EvaluationPlayer(Player):
         m = float(state.M)
         n = float(state.N)
 
-        for a in state.actions():
-            stonesOppSide += state.board[a.index]
+        oppRange = state.possible_action_range()
+        for a in range(oppRange[0], oppRange[1]):
+            stonesOppSide += state.board[a]
 
-        for i in range((state.player_goal_idx + 1), (state.opponent_goal_idx)):
-            stonesYourSide += state.board[i]
+        if my_row == 0:
+            for i in range(0, state.player_goal_idx):
+                stonesYourSide += state.board[i]
+        else:
+            for i in range((state.player_goal_idx + 1), (state.opponent_goal_idx)):
+                stonesYourSide += state.board[i]
 
         result = (1 / (2 * m * n)) * (goalStone - oppStones + stonesYourSide - stonesOppSide)
 
