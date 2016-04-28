@@ -35,6 +35,9 @@ class CustomAgentPlayer(Player):
         :return: Action, the next move
         """
 
+        (self.tTable).clear()
+        (self.aTable).clear()
+
         best_act = None
         best_v = -sys.maxint
 
