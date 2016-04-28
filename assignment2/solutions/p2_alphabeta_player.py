@@ -7,7 +7,7 @@ import sys
 
 class AlphaBetaPlayer(Player):
 
-    nextState = None
+    nextAction = None
 
     def move(self, state):
         """Calculates the best move from the given board using the minimax
@@ -19,17 +19,24 @@ class AlphaBetaPlayer(Player):
         raise NotImplementedError("Need to implement this method")
 
     def abSearch(self, state):
-        global nextState
+        global nextAction
 
-        self.maxVal(state, -sys.maxint, sys.maxint)
+        best_act = None;
+        best_v = -sys.maxint
 
-        best_act = nextState
+        for actions in state.actions():
+            t = self.minVal(state.result(actions), -sys.maxint, sys.maxint)
+
+            if best_v < t:
+                best_v = t
+                best_act = actions
+
+        #best_act = nextAction
 
         return best_act
 
-
     def maxVal(self, state, alpha, beta):
-        global nextState
+        global nextAction
 
         if state.is_terminal():
             return state.utility(self)
@@ -44,14 +51,14 @@ class AlphaBetaPlayer(Player):
                 if v >= beta:
                     return v
                 if (v > alpha):
-                    nextState = a
+                    nextAction = a
                 alpha = max(v, alpha)
 
 
         return v
 
     def minVal(self, state, alpha, beta):
-        global nextState
+        global nextAction
 
         if state.is_terminal():
             return state.utility(self)

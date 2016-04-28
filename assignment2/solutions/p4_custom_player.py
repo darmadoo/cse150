@@ -6,7 +6,7 @@ __author__ = 'hdharmaw@ucsd.edu, A91413023, mdarmadi@ucsd.edu, A11410141, vcchan
 from assignment2 import Player, State, Action
 import sys
 
-DEPTH = 5  # customizable depth
+DEPTH = 7  # customizable depth
 
 class CustomAgentPlayer(Player):
     """The custom player implementation.
@@ -57,7 +57,7 @@ class CustomAgentPlayer(Player):
 
 
     def maxVal(self, state, depth, alpha, beta):
-        global nextState, DEPTH
+        global nextAction, DEPTH
 
         # if time's up
         if self.is_time_up() or depth >= DEPTH:
@@ -70,7 +70,7 @@ class CustomAgentPlayer(Player):
         v = -sys.maxint
 
         if not state.actions():
-            v = max(v, self.minVal(state.result(None), alpha, beta))
+            v = max(v, self.minVal(state.result(None), depth + 1, alpha, beta))
         else:
             for a in state.actions():
                 # if value can be found in transposition table
@@ -84,13 +84,13 @@ class CustomAgentPlayer(Player):
                     return v
 
                 if (v > alpha):
-                    nextState = a
+                 nextAction = a
                 alpha = max(v, alpha)
 
         return v
 
     def minVal(self, state, depth, alpha, beta):
-        global nextState, DEPTH
+        global nextAction, DEPTH
 
         # if time's up
         if self.is_time_up() or depth >= DEPTH:
