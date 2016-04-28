@@ -103,7 +103,7 @@ class CustomAgentPlayer(Player):
         v = sys.maxint
 
         if not state.actions():
-            v = min(v, self.maxVal(state.result(None), alpha, beta))
+            v = min(v, self.maxVal(state.result(None),depth + 1, alpha, beta))
         else:
             for a in state.actions():
                 if not self.tTable.get(state.result(a)) is None:
