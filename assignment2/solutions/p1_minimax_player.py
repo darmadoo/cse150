@@ -17,7 +17,7 @@ class MinimaxPlayer(Player):
         :param state: State, the current state of the board.
         :return: Action, the next move
         """
-        t0 = time.time()
+        #t0 = time.time()
         best_act = None
         best_v = -sys.maxint
 
@@ -28,8 +28,8 @@ class MinimaxPlayer(Player):
                 best_v = t
                 best_act = actions
                 
-        t1 = time.time()
-        print "Time: " + str(t1-t0)
+        #t1 = time.time()
+        #print "Time: " + str(t1-t0)
         return best_act
 
     def minVal(self, state):

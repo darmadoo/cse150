@@ -35,7 +35,7 @@ class CustomAgentPlayer10(Player):
         :param state: State, the current state of the board.
         :return: Action, the next move
         """
-        t0 = time.time()
+        #t0 = time.time()
         (self.tTable).clear()
         (self.aTable).clear()
 
@@ -54,8 +54,8 @@ class CustomAgentPlayer10(Player):
             if (self.aTable.get(action) > best_v):
                 best_v = self.aTable.get(action)
                 best_act = action
-        t1 = time.time()
-        print "Time: " + str(t1 - t0)
+        #t1 = time.time()
+        #print "Time: " + str(t1 - t0)
         return best_act
 
         # raise NotImplementedError("Need to implement this method")
