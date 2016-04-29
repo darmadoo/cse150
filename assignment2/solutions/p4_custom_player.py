@@ -37,7 +37,7 @@ class CustomAgentPlayer(Player):
 
         #t0 = time.time()
         (self.tTable).clear()
-        (self.aTable).clear()
+        #(self.aTable).clear()
 
         best_act = None
         best_v = -sys.maxint
