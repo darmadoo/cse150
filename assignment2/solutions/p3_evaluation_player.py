@@ -3,6 +3,7 @@ __author__ = 'hdharmaw@ucsd.edu, A91413023, mdarmadi@ucsd.edu, A11410141, vcchan
 
 
 from assignment2 import Player, State, Action
+import time
 
 
 class EvaluationPlayer(Player):
@@ -14,6 +15,7 @@ class EvaluationPlayer(Player):
         """
 
         # *You do not need to modify this method.*
+        t0 = time.time()
         best_value = -1.0
 
         actions = state.actions()
@@ -27,7 +29,8 @@ class EvaluationPlayer(Player):
             if value > best_value:
                 best_value = value
                 best_move = action
-
+        t1 = time.time()
+        print "Time: " + str(t1 -t0)
         # Return the move with the highest evaluation value
         return best_move
 

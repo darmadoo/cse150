@@ -5,6 +5,7 @@ __author__ = 'hdharmaw@ucsd.edu, A91413023, mdarmadi@ucsd.edu, A11410141, vcchan
 
 from assignment2 import Player, State, Action
 import sys
+import time 
 
 DEPTH = 7  # customizable depth
 
@@ -34,7 +35,7 @@ class CustomAgentPlayer(Player):
         :param state: State, the current state of the board.
         :return: Action, the next move
         """
-
+        t0 = time.time()
         (self.tTable).clear()
         (self.aTable).clear()
 
@@ -53,7 +54,8 @@ class CustomAgentPlayer(Player):
             if (self.aTable.get(action) > best_v):
                 best_v = self.aTable.get(action)
                 best_act = action
-
+        t1 = time.time()
+        print "Time: " + str(t1 - t0)
         return best_act
 
         # raise NotImplementedError("Need to implement this method")
