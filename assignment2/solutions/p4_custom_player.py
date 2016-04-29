@@ -23,7 +23,6 @@ class CustomAgentPlayer(Player):
 
         # VARIABLES
         self.tTable = {} # transposition table
-        self.aTable = {} # action transposition table
 
         pass
 
@@ -35,6 +34,7 @@ class CustomAgentPlayer(Player):
         :param state: State, the current state of the board.
         :return: Action, the next move
         """
+
         #t0 = time.time()
         (self.tTable).clear()
         (self.aTable).clear()
@@ -42,17 +42,19 @@ class CustomAgentPlayer(Player):
         best_act = None
         best_v = -sys.maxint
 
+        aTable = {}
+
         for d in range(1, DEPTH):
             actions = state.actions()
 
             for action in actions:
-                util = self.minVal(state.result(action), d + 1, -sys.maxint, sys.maxint)
-                self.aTable[action] = util
+                util = self.minVal(state.result(action), d + 1, -sys.maxint, sys.maxint, aTable)
+                aTable[action] = util
 
         # go through the action table to find the best move
-        for action in self.aTable:
-            if (self.aTable.get(action) > best_v):
-                best_v = self.aTable.get(action)
+        for action in aTable:
+            if aTable.get(action) > best_v:
+                best_v = aTable.get(action)
                 best_act = action
         #t1 = time.time()
         #print "Time: " + str(t1 - t0)
@@ -61,7 +63,7 @@ class CustomAgentPlayer(Player):
         # raise NotImplementedError("Need to implement this method")
 
 
-    def maxVal(self, state, depth, alpha, beta):
+    def maxVal(self, state, depth, alpha, beta, atable):
         global nextAction, DEPTH
 
         # if time's up
@@ -75,7 +77,7 @@ class CustomAgentPlayer(Player):
         v = -sys.maxint
 
         if not state.actions():
-            v = max(v, self.minVal(state.result(None), depth + 1, alpha, beta))
+            v = max(v, self.minVal(state.result(None), depth + 1, alpha, beta, atable))
         else:
             for a in state.actions():
                 # if value can be found in transposition table
@@ -83,7 +85,7 @@ class CustomAgentPlayer(Player):
                     v = max(v, self.tTable[state.result(a)])
 
                 else:
-                    v = max(v, self.minVal(state.result(a), depth + 1, alpha, beta))
+                    v = max(v, self.minVal(state.result(a), depth + 1, alpha, beta, atable))
 
                 if v >= beta:
                     return v
@@ -94,7 +96,7 @@ class CustomAgentPlayer(Player):
 
         return v
 
-    def minVal(self, state, depth, alpha, beta):
+    def minVal(self, state, depth, alpha, beta, atable):
         global nextAction, DEPTH
 
         # if time's up
@@ -108,14 +110,14 @@ class CustomAgentPlayer(Player):
         v = sys.maxint
 
         if not state.actions():
-            v = min(v, self.maxVal(state.result(None),depth + 1, alpha, beta))
+            v = min(v, self.maxVal(state.result(None),depth + 1, alpha, beta, atable))
         else:
             for a in state.actions():
                 if not self.tTable.get(state.result(a)) is None:
                     v = min(v, self.tTable[state.result(a)])
 
                 else:
-                    v = min(v, self.maxVal(state.result(a), depth + 1,  alpha, beta))
+                    v = min(v, self.maxVal(state.result(a), depth + 1,  alpha, beta, atable))
 
                 if v <= alpha:
                     return v
