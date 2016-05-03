@@ -35,7 +35,6 @@ class CustomAgentPlayer(Player):
         :return: Action, the next move
         """
 
-        (self.tTable).clear()
         (self.aTable).clear()
 
         best_act = None
@@ -49,6 +48,7 @@ class CustomAgentPlayer(Player):
                 self.aTable[action] = util
 
         # go through the action table to find the best move
+        print self.aTable
         for action in self.aTable:
             if (self.aTable.get(action) > best_v):
                 best_v = self.aTable.get(action)
