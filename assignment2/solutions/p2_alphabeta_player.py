@@ -4,6 +4,7 @@ __author__ = 'mdarmadi@ucsd.edu, A11410141, hdharmaw@ucsd.edu, A91413023, vcchan
 
 from assignment2 import Player, State, Action
 import sys
+import time
 
 class AlphaBetaPlayer(Player):
 
@@ -17,7 +18,7 @@ class AlphaBetaPlayer(Player):
         raise NotImplementedError("Need to implement this method")
 
     def abSearch(self, state):
-
+        #t0 = time.time()
         best_act = None;
         best_v = -sys.maxint
 
@@ -27,7 +28,8 @@ class AlphaBetaPlayer(Player):
             if best_v < t:
                 best_v = t
                 best_act = actions
-
+        #t1 = time.time()
+        #print "Time: " + str(t1-t0)
         return best_act
 
     def maxVal(self, state, alpha, beta):

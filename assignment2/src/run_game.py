@@ -2,6 +2,7 @@
 """Contains routines for running the game."""
 import random
 import os
+import time
 
 from types import MethodType
 from multiprocessing import Process, Queue
@@ -182,4 +183,7 @@ if __name__ == '__main__':
     player_classes = [getattr(names[name], name) for name in player_names]
 
     game = ConsoleGame(M, N, player_classes, timeout)
+    t0 = time.time()
     game.play()
+    t1 = time.time()
+    print "Game time: " + str(t1-t0)

@@ -4,6 +4,7 @@ __author__ = 'hdharmaw@ucsd.edu, A91413023, mdarmadi@ucsd.edu, A11410141, vcchan
 
 from assignment2 import Player, State, Action
 import sys
+import time
 
 class MinimaxPlayer(Player):
     def __init__(self):
@@ -16,6 +17,7 @@ class MinimaxPlayer(Player):
         :param state: State, the current state of the board.
         :return: Action, the next move
         """
+        #t0 = time.time()
         best_act = None
         best_v = -sys.maxint
 
@@ -25,7 +27,9 @@ class MinimaxPlayer(Player):
             if best_v < t:
                 best_v = t
                 best_act = actions
-
+                
+        #t1 = time.time()
+        #print "Time: " + str(t1-t0)
         return best_act
 
     def minVal(self, state):
