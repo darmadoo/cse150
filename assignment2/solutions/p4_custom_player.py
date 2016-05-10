@@ -7,7 +7,7 @@ from assignment2 import Player, State, Action
 import sys
 import time 
 
-DEPTH = 7  # customizable depth
+DEPTH = 5  # customizable depth
 
 class CustomAgentPlayer(Player):
     """The custom player implementation.
