@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import operator
 
 def select_unassigned_variable(csp):
     """Selects the next unassigned variable, or None if there is no more unassigned variables
@@ -11,8 +12,39 @@ def select_unassigned_variable(csp):
     """
 
     # TODO implement this
-    pass
+    unassignedList = []
+    unassignedFlag = False
 
+    for variable in csp.variables:
+        if not variable.is_assigned():
+            unassignedList.append(variable)
+            unassignedFlag = True
+
+    if unassignedFlag:
+        sortList = sorted(unassignedList, key=lambda temp: temp.domain)
+        front = sortList[0]
+        n = 0
+        tieList = []
+        tieList.append(front)
+        for var in range(1, len(sortList)):
+            if len(front.domain) == len(sortList[var].domain):
+                n += 1
+                tieList.append(sortList[var])
+
+        # No repeat take the head
+        if n == 0:
+            return front
+        else:
+            maxCon = -1
+            for x in tieList:
+                if len(csp.constraints[x]) > maxCon:
+                    maxCon = len(csp.constraints[x])
+                    maxVar = x
+            return maxVar
+    else:   # When all the variables are assigned
+        return None
+
+    pass
 
 
 def order_domain_values(csp, variable):
@@ -24,4 +56,24 @@ def order_domain_values(csp, variable):
     """
 
     # TODO implement this
+    orderDict = {}
+    domain = variable.domain
+
+    for i in domain:
+        orderDict[i] = 0
+
+    print orderDict
+
+    for constraint in csp.constraints[variable]:
+        curDomain = constraint.var2.domain
+        for i in curDomain:
+            if i in orderDict:
+                orderDict[i] += 1
+    newList = []
+    sortedList = sorted(orderDict.items(), key=operator.itemgetter(1))
+    for i in sortedList:
+        newList.append(i[0])
+
+    return newList
+
     pass
