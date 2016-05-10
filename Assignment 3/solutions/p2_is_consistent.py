@@ -11,4 +11,9 @@ def is_consistent(csp, variable, value):
     violates the constraint c(x,y).  This method does not check c(x,Z), because Z is not yet assigned."""
 
     # TODO implement this
+    for constraint in csp.constraints[variable]:
+        if not constraint.is_satisfied(value, constraint.var2.value):
+            return False
+    return True
+
     pass
