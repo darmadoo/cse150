@@ -62,7 +62,7 @@ def order_domain_values(csp, variable):
     for i in domain:
         orderDict[i] = 0
 
-    print orderDict
+    # print orderDict
 
     for constraint in csp.constraints[variable]:
         curDomain = constraint.var2.domain
