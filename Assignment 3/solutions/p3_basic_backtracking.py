@@ -3,6 +3,8 @@
 from p1_is_complete import is_complete
 from p2_is_consistent import  is_consistent
 
+import time
+
 def select_unassigned_variable(csp):
     """Selects the next unassigned variable, or None if there is no more unassigned variables
     (i.e. the assignment is complete).
@@ -36,7 +38,11 @@ def backtracking_search(csp):
 
     For P3, *you do not need to modify this method.*
     """
+    t0 = time.time()
+    
     if backtrack(csp):
+        t1 = time.time()
+        print "Execution time for simple backtrack: " + str(t1 - t0)
         return csp.assignment
     else:
         return None

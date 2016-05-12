@@ -2,6 +2,11 @@
 
 from collections import deque
 
+from p1_is_complete import  is_complete
+from p2_is_consistent import is_consistent
+from p5_ordering import select_unassigned_variable
+from p5_ordering import order_domain_values
+
 
 def inference(csp, variable):
     """Performs an inference procedure for the variable assignment.
@@ -32,6 +37,29 @@ def backtrack(csp):
     """
 
     # TODO copy from p3
+    
+    if is_complete(csp):  #if assigment is completed, return true
+        return True
+    
+    var = select_unassigned_variable(csp)
+    
+    for value in order_domain_values(csp, var):
+        csp.variables.begin_transaction()
+        # print var
+
+        if is_consistent(csp, var, value):            
+            var.assign(value)   #add var=value to assignment
+
+
+            inferences = inference(csp, var) # get the inferences
+            if(inferences):
+                #add inferences to assignment???
+                #need to implement above!!!!
+                result = backtrack(csp)
+                if(result):
+                    return result
+        csp.variables.rollback()
+    
     return False
 
 
@@ -50,4 +78,46 @@ def ac3(csp, arcs=None):
     queue_arcs = deque(arcs if arcs is not None else csp.constraints.arcs())
 
     # TODO copy from p4
+    while (queue_arcs):
+        (xi, xj) = queue_arcs.pop()
+
+        if revise(csp, xi, xj):
+            if len(xi.domain) == 0 or xi.domain is None:
+                return False
+
+            for const in csp.constraints[xi]:
+                xk = const.var2
+                if not (xk == xi or xk == xj):
+                    pair = (xk, xi)
+                    queue_arcs.append(pair)
+
+    return True
+    
     pass
+
+def revise(csp, xi, xj):
+    # You may additionally want to implement the 'revise' method.
+
+    revised = False
+    newdomain = xi.domain[:]
+
+    for x in xi.domain:
+        const = False
+        for y in xj.domain:
+            for constraint in csp.constraints[xi, xj]:
+                if constraint.is_satisfied(x, y):
+                    const = True
+                    break # break out of constraint loop
+
+            if const:
+                break # break out of y xj.domain loop
+
+        if not const:
+            newdomain.remove(x)
+            revised = True
+
+    xi.domain = newdomain[:]
+    return revised
+
+    pass
+
