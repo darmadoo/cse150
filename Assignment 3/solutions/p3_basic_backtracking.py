@@ -59,14 +59,14 @@ def backtrack(csp):
         return True
     
     var = select_unassigned_variable(csp)
+    print var
     
     for value in order_domain_values(csp, var):
         csp.variables.begin_transaction()
-        # print var
+        
 
         if is_consistent(csp, var, value):            
             var.assign(value)   #add var=value to assignment
-
 
             inferences = inference(csp, var) # get the inferences
             if(inferences):

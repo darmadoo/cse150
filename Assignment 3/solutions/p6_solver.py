@@ -2,6 +2,8 @@
 
 from collections import deque
 
+import time
+
 from p1_is_complete import  is_complete
 from p2_is_consistent import is_consistent
 from p5_ordering import select_unassigned_variable
@@ -24,7 +26,10 @@ def backtracking_search(csp):
 
     For P6, *you do not need to modify this method.*
     """
+    t0 = time.time()
     if backtrack(csp):
+        t1 = time.time()
+        print "execution time: " + str(t1 -t0)
         return csp.assignment
     else:
         return None
@@ -42,6 +47,7 @@ def backtrack(csp):
         return True
     
     var = select_unassigned_variable(csp)
+    #print var
     
     for value in order_domain_values(csp, var):
         csp.variables.begin_transaction()
@@ -54,7 +60,7 @@ def backtrack(csp):
             inferences = inference(csp, var) # get the inferences
             if(inferences):
                 #add inferences to assignment???
-                #need to implement above!!!!
+                #need to implement above!!!!   already implemented when running ac3??
                 result = backtrack(csp)
                 if(result):
                     return result
@@ -76,7 +82,6 @@ def ac3(csp, arcs=None):
     return any additional variable assignments (for simplicity)."""
 
     queue_arcs = deque(arcs if arcs is not None else csp.constraints.arcs())
-
     # TODO copy from p4
     while (queue_arcs):
         (xi, xj) = queue_arcs.pop()

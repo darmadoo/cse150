@@ -21,25 +21,28 @@ def select_unassigned_variable(csp):
             unassignedFlag = True
 
     if unassignedFlag:
-        sortList = sorted(unassignedList, key=lambda temp: temp.domain)
+        sortList = sorted(unassignedList, key=lambda temp: len(temp.domain))
         front = sortList[0]
-        n = 0
         tieList = []
         tieList.append(front)
-        for var in range(1, len(sortList)):
-            if len(front.domain) == len(sortList[var].domain):
-                n += 1
-                tieList.append(sortList[var])
+#         for var in range(1, len(sortList)):
+#             if len(front.domain) == len(sortList[var].domain):
+#                 tieList.append(sortList[var])
+        i = 1
+        while (len(front.domain) == sortList[i].domain):
+            tieList.append(sortList[i])
+            i += 1
 
         # No repeat take the head
-        if n == 0:
+        if len(tieList) == 1:
             return front
         else:
             maxCon = -1
             for x in tieList:
                 if len(csp.constraints[x]) > maxCon:
-                    maxCon = len(csp.constraints[x])
-                    maxVar = x
+                     maxCon = len(csp.constraints[x])
+                     maxVar = x
+            #maxVar = max(tieList, key=lambda i:len(i.constraints))
             return maxVar
     else:   # When all the variables are assigned
         return None
