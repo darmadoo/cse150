@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 import operator
 from operator import itemgetter
+from p1_is_complete import is_complete
+
+import sys
 
 def select_unassigned_variable(csp):
     """Selects the next unassigned variable, or None if there is no more unassigned variables
@@ -11,52 +14,63 @@ def select_unassigned_variable(csp):
     then it picks the variable that is involved in the largest number of constraints on other
     unassigned variables.
     """
-
     # TODO implement this
+
+
+    if is_complete(csp):
+        return True
+
     unassignedList = []
     unassignedFlag = False
-    print "start ordering"
+    min_val = sys.maxint
 
     for variable in csp.variables:
         if not variable.is_assigned():
-            unassignedList.append((variable , len(variable.domain)))
-            unassignedFlag = True
+            if len(variable.domain) == min_val:
+                unassignedList.append(variable)
+                unassignedFlag = True
+
+            elif len(variable.domain) < min_val:
+                unassignedList = [variable]
+                min_val = len(variable.domain)
+                unassignedFlag = True
 
     if unassignedFlag:
-        sortList = sorted(unassignedList, key=itemgetter(1))
-        #print "sorted list:"
-        #print sortList
-        front = sortList[0]
-        #print "Front: " + str(front)
-        tieList = []
-        tieList.append(front)
-        if(len(sortList) > 1):
-            for var in range(1, len(sortList)):
-                if front[1] == sortList[var][1]:
-                    tieList.append(sortList[var])
-                else:
-                    break    
-#         if(len(sortList) > 1):
-#             i = 1
-#             while (i < len(sortList)):
-#                 if(len(front.domain) < len(sortList[i].domain)):
-#                     break
-#                 tieList.append(sortList[i])
-#                 i += 1
+        if (len(unassignedList)) == 1:
+            return unassignedList[0]
 
-         #No repeat take the head
-        if len(tieList) == 1:
-            return front[0]
         else:
-#             maxCon = -1
-#             for x in tieList:
-#                 if len(csp.constraints[x[0]]) > maxCon:
-#                      maxCon = len(csp.constraints[x[0]])
-#                      maxVar = x
-            maxVar = max(tieList, key=lambda i:len(csp.constraints[i[0]]))
-            #print "maxVar: " + str(maxVar[0])
-            return maxVar[0]
-        #return front[0]
+            max_constraint = -sys.maxint
+            var = None
+            for variable in unassignedList:
+                if (len(csp.constraints[variable]) > max_constraint):
+                    var = variable
+                    max_constraint = len(csp.constraints[variable])
+
+            return var
+
+
+        #
+        # sortList = sorted(unassignedList, key=itemgetter(1))
+        # front = sortList[0]
+        # tieList = []
+        # tieList.append(front)
+        # if(len(sortList) > 1):
+        #     for var in range(1, len(sortList)):
+        #         if front[1] == sortList[var][1]:
+        #             tieList.append(sortList[var])
+        #         else:
+        #             break
+        #
+        #  #No repeat take the head
+        # if len(tieList) == 1:
+        #     return front[0]
+        # else:
+        #     maxVar = max(tieList, key=lambda i:len(csp.constraints[i[0]]))
+        #     #print "maxVar: " + str(maxVar[0])
+        #     return maxVar[0]
+        # #return front[0]
+
     else:   # When all the variables are assigned
         return None
 
