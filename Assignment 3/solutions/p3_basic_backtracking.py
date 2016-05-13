@@ -59,7 +59,7 @@ def backtrack(csp):
         return True
     
     var = select_unassigned_variable(csp)
-    print var
+    #print var
     
     for value in order_domain_values(csp, var):
         csp.variables.begin_transaction()

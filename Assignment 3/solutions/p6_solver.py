@@ -7,6 +7,7 @@ import time
 from p1_is_complete import  is_complete
 from p2_is_consistent import is_consistent
 from p5_ordering import select_unassigned_variable
+#from p3_basic_backtracking import select_unassigned_variable
 from p5_ordering import order_domain_values
 
 
@@ -16,6 +17,7 @@ def inference(csp, variable):
     For P6, *you do not need to modify this method.*
     """
     return ac3(csp, csp.constraints[variable].arcs())
+    #return True
 
 
 def backtracking_search(csp):
@@ -45,11 +47,16 @@ def backtrack(csp):
     
     if is_complete(csp):  #if assigment is completed, return true
         return True
-    
+    t3 = time.time()
     var = select_unassigned_variable(csp)
+    t4 = time.time()
+    #print "Selecting: " + str(t4 - t3)
     #print var
     
-    for value in order_domain_values(csp, var):
+    ordered = order_domain_values(csp, var)
+    
+    
+    for value in ordered:
         csp.variables.begin_transaction()
         # print var
 

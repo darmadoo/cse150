@@ -7,7 +7,7 @@
 import os
 import sys
 import operator
-
+sys.path.append("../../src")
 from assignment3 import *
 
 def run_code_from(python_file, input_text):
