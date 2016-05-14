@@ -43,10 +43,15 @@ def select_unassigned_variable(csp):
             max_constraint = -sys.maxint
             var = None
             for variable in unassignedList:
-                if (len(csp.constraints[variable]) > max_constraint):
+                count = 0 
+                for constraint in csp.constraints[variable]:               
+                    if not constraint.var2.is_assigned():   #count only the unassigned variables
+                        count += 1
+                        
+                if count > max_constraint:
                     var = variable
-                    max_constraint = len(csp.constraints[variable])
-
+                    max_constraint = count
+            
             return var
 
 
@@ -104,7 +109,7 @@ def order_domain_values(csp, variable):
     for i in sortedList:
         newList.append(i[0])
     #print "newline"
-    #print newList
+    #print sortedList
     return newList
 
     pass

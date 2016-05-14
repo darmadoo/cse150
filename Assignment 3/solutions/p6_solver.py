@@ -11,6 +11,7 @@ import time
 from p5_ordering import select_unassigned_variable
 #from p3_basic_backtracking import select_unassigned_variable
 from p5_ordering import order_domain_values
+#from p3_basic_backtracking import order_domain_values
 
 
 def inference(csp, variable):
@@ -33,7 +34,7 @@ def backtracking_search(csp):
     t0 = time.time()
     if backtrack(csp):
         t1 = time.time()
-        #print "execution time: " + str(t1 -t0)
+        print "execution time: " + str(t1 -t0)
         return csp.assignment
     else:
         return None
@@ -49,23 +50,21 @@ def backtrack(csp):
     
     if is_complete(csp):  #if assigment is completed, return true
         return True
-    t3 = time.time()
+    #t3 = time.time()
     var = select_unassigned_variable(csp)
-    t4 = time.time()
+    #t4 = time.time()
     #print "Selecting: " + str(t4 - t3)
     #print var
     
     ordered = order_domain_values(csp, var)
-    
+    #print ordered
     
     for value in ordered:
         csp.variables.begin_transaction()
-        # print var
-
+        #print var
         if is_consistent(csp, var, value):            
             var.assign(value)   #add var=value to assignment
-
-
+            #print "Assigned " + str(value) + " to " + str(var)
             inferences = inference(csp, var) # get the inferences
             if(inferences):
                 #add inferences to assignment???
@@ -73,7 +72,9 @@ def backtrack(csp):
                 result = backtrack(csp)
                 if(result):
                     return result
+        #print "call rollback"
         csp.variables.rollback()
+        #print csp.variables
     
     return False
 
@@ -138,7 +139,7 @@ def ac3(csp, arcs=None):
         (xi, xj) = queue_arcs.pop()
 
         if revise(csp, xi, xj):
-            if len(xi.domain) == 0 or xi.domain is None:
+            if (len(xi.domain) == 0 or xi.domain is None):
                 return False
 
             for const in csp.constraints[xi]:
@@ -170,7 +171,7 @@ def revise(csp, xi, xj):
         if not const:
             newdomain.remove(x)
             revised = True
-
+            
     xi.domain = newdomain[:]
     return revised
 
