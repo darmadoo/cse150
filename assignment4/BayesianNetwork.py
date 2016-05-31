@@ -92,6 +92,8 @@ class BayesianNetwork(object):
     def performWeightedSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performWeightedSampling """
         #  TODO
+        # test
+
         return 0
 
     # 
