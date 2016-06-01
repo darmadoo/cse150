@@ -2,6 +2,7 @@
 """ generated source for module BayesianNetwork """
 from Assignment4 import *
 import random
+
 #
 #  * A bayesian network
 #  * @author Panqu
@@ -82,26 +83,32 @@ class BayesianNetwork(object):
     def performRejectionSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performRejectionSampling """
         #  TODO
-        flag = True
         n = [0, 0]
 
-        # print queryVar
         for i in range(1, numSamples):
-            # assignements
+            flag = True
+            # assignments
             x = self.priorSampling()
             for j in givenVars:
-                if not givenVars[j] == x[j]:
+                if not givenVars[j] == x[j.getName()]:
                     flag = False
 
             # It is consistent
             if flag:
-                if x[queryVar]:
+                if x[queryVar.getName()]:
                     n[0] += 1
                 else:
                     n[1] += 1
 
-        print n
-        return 0
+        return self.normalize(n)
+
+    def normalize(self, arr):
+
+        total = 0
+        for i in arr:
+            total = total + i
+
+        return float(arr[0])/total, float(arr[1])/total
 
     #
     #     * Returns an estimate of P(queryVal=true|givenVars) using weighted sampling
@@ -112,8 +119,41 @@ class BayesianNetwork(object):
     def performWeightedSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performWeightedSampling """
         #  TODO
-        return 0
 
+        final = [0, 0]
+
+        for i in range(1, numSamples):
+            (x, w) = self.getWeightedSample(givenVars)
+
+            if x[queryVar.getName()]:
+                final[0] += w
+            else:
+                final[1] += w
+
+        return self.normalize(final)
+
+    def getWeightedSample(self, e):
+
+        sample = Sample()
+        for i in e:
+            sample.setAssignment(i.getName(), e[i])
+
+        for i in self.varMap.keys():
+            rand = random.random()
+            if sample.getValue(i.getName()) is not None:
+                currentWeight = sample.getWeight()
+                print currentWeight
+                newWeight = currentWeight * self.varMap.get(i).getProbability(sample.assignments, True)
+                sample.setWeight(newWeight)
+            else:
+                if rand > self.varMap.get(i).getProbability(sample.assignments, True):
+                    sample.assignments[i.getName()] = False
+                else:
+                    sample.assignments[i.getName()] = True
+
+        # print sample.getWeight(), sample.assignments
+
+        return sample.assignments, sample.getWeight()
     #
     #     * Returns an estimate of P(queryVal=true|givenVars) using Gibbs sampling
     #     * @param queryVar Query variable in probability query
@@ -127,16 +167,16 @@ class BayesianNetwork(object):
         return 0
 
     def priorSampling(self):
-        new = sorted(self.varMap)
+        # new = sorted(self.varMap)
         assignments = {}
 
-        for i in new:
+        for i in self.varMap.keys():
             # Generated Random numbers
-            rand = random.uniform(0, 1)
+            rand = random.random()
 
             if rand > self.varMap.get(i).getProbability(assignments, True):
-                assignments[i] = False
+                assignments[i.getName()] = False
             else:
-                assignments[i] = True
+                assignments[i.getName()] = True
 
         return assignments
