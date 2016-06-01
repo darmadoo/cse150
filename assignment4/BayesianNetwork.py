@@ -83,7 +83,8 @@ class BayesianNetwork(object):
     def performRejectionSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performRejectionSampling """
         #  TODO
-        n = [0, 0]
+        total = 0
+        query = [0, 0]
 
         for i in range(1, numSamples):
             flag = True
@@ -93,14 +94,14 @@ class BayesianNetwork(object):
                 if not givenVars[j] == x[j.getName()]:
                     flag = False
 
-            # It is consistent
+            # It is consistens
             if flag:
                 if x[queryVar.getName()]:
-                    n[0] += 1
+                    query[0] += 1
                 else:
-                    n[1] += 1
+                    query[1] += 1
 
-        return self.normalize(n)
+        return self.normalize(query)[0]
 
     def normalize(self, arr):
 
@@ -108,7 +109,26 @@ class BayesianNetwork(object):
         for i in arr:
             total = total + i
 
+        # to avoid division by 0
+        if total == 0:
+            return 0, 0
+
         return float(arr[0])/total, float(arr[1])/total
+
+    def priorSampling(self):
+        new = sorted(self.varMap)
+        assignments = {}
+
+        for i in new:
+            # Generated Random numbers
+            rand = random.random()
+
+            if rand > self.varMap.get(i).getProbability(assignments, True):
+                assignments[i.getName()] = False
+            else:
+                assignments[i.getName()] = True
+
+        return assignments
 
     #
     #     * Returns an estimate of P(queryVal=true|givenVars) using weighted sampling
@@ -161,19 +181,43 @@ class BayesianNetwork(object):
     def performGibbsSampling(self, queryVar, givenVars, numTrials):
         """ generated source for method performGibbsSampling """
         #  TODO
+
+        query = [0, 0]
+        nonEvidenceVar = []
+        sortedGiven = sorted(givenVars)
+
+        # get nonEvidence variables
+        for var in self.varMap.keys():
+            if not var.getName() in sortedGiven:
+                nonEvidenceVar.append(var)
+
+        newEvent = {}
+
+        # get event
+        for var in self.varMap.keys():
+            if var in sortedGiven:
+                newEvent[var] = givenVars[var]
+
+            else:
+                rand = random.random()
+                value = False
+                if rand > 0.5:
+                    value = True
+                newEvent[var] = value
+
+
+        for i in range(1, numTrials):
+            for var in nonEvidenceVar:
+                currentNode = self.varMap[var]
+
+
+
+
+
+
         return 0
 
-    def priorSampling(self):
-        # new = sorted(self.varMap)
-        assignments = {}
 
-        for i in self.varMap.keys():
-            # Generated Random numbers
-            rand = random.random()
+    #def markovBlanket(self, node):
 
-            if rand > self.varMap.get(i).getProbability(assignments, True):
-                assignments[i.getName()] = False
-            else:
-                assignments[i.getName()] = True
 
-        return assignments

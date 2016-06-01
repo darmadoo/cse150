@@ -43,7 +43,7 @@ class TestNetwork(object):
         #  P(J=1|B=0,E=1) = TODO in writeup
         print("Test 1")
         given1 = {}
-        given1[burglary]= False
+        given1[burglary]=False
         given1[earthquake]=True
         print("rejection sampling: " +str(alarmnet.performRejectionSampling(john, given1, 999999)))
         print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 99999)))
