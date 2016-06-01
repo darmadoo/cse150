@@ -142,7 +142,6 @@ class BayesianNetwork(object):
             rand = random.random()
             if sample.getValue(i.getName()) is not None:
                 currentWeight = sample.getWeight()
-                print currentWeight
                 newWeight = currentWeight * self.varMap.get(i).getProbability(sample.assignments, True)
                 sample.setWeight(newWeight)
             else:
@@ -150,8 +149,6 @@ class BayesianNetwork(object):
                     sample.assignments[i.getName()] = False
                 else:
                     sample.assignments[i.getName()] = True
-
-        # print sample.getWeight(), sample.assignments
 
         return sample.assignments, sample.getWeight()
     #
