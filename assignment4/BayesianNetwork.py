@@ -82,12 +82,25 @@ class BayesianNetwork(object):
     def performRejectionSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performRejectionSampling """
         #  TODO
-        n = {}
+        flag = True
+        n = [0, 0]
+
         # print queryVar
-        # for i in range(1, numSamples):
-        x = self.priorSampling()
+        for i in range(1, numSamples):
+            # assignements
+            x = self.priorSampling()
+            for j in givenVars:
+                if not givenVars[j] == x[j]:
+                    flag = False
 
+            # It is consistent
+            if flag:
+                if x[queryVar]:
+                    n[0] += 1
+                else:
+                    n[1] += 1
 
+        print n
         return 0
 
     #
@@ -114,20 +127,16 @@ class BayesianNetwork(object):
         return 0
 
     def priorSampling(self):
-        # an event with n elements
-        x = [0] * len(self.varMap)
-
         new = sorted(self.varMap)
+        assignments = {}
 
         for i in new:
             # Generated Random numbers
             rand = random.uniform(0, 1)
 
-            if self.varMap.get(i).getParents():
-                # sample them
-                print "ITS TRUE"
+            if rand > self.varMap.get(i).getProbability(assignments, True):
+                assignments[i] = False
             else:
-                print "False"
-                # print self.varMap.get(i).getProbability(BLAH, BLAH)
+                assignments[i] = True
 
-        return 0
+        return assignments
