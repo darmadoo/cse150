@@ -101,7 +101,7 @@ class BayesianNetwork(object):
                 else:
                     query[1] += 1
 
-        return self.normalize(query)[0]
+        return self.normalize(query)
 
     def normalize(self, arr):
 
@@ -157,12 +157,17 @@ class BayesianNetwork(object):
         sample = Sample()
         for i in e:
             sample.setAssignment(i.getName(), e[i])
-
-        for i in self.varMap.keys():
+        
+#         print sample.assignments
+        
+#         print "aaaazzzzzzzzzzzzzzzzz"
+        for i in sorted(self.varMap.keys()):
+#             print i.getName()
             rand = random.random()
             if sample.getValue(i.getName()) is not None:
                 currentWeight = sample.getWeight()
-                newWeight = currentWeight * self.varMap.get(i).getProbability(sample.assignments, True)
+#                print self.varMap.get(i).getVariable().getName(),self.varMap.get(i).getProbability(sample.assignments, sample.assignments.get(i.getName()))
+                newWeight = currentWeight * self.varMap.get(i).getProbability(sample.assignments, sample.assignments.get(i.getName()))
                 sample.setWeight(newWeight)
             else:
                 if rand > self.varMap.get(i).getProbability(sample.assignments, True):
