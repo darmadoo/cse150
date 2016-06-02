@@ -253,6 +253,9 @@ class BayesianNetwork(object):
     def getNewProbs(self, var, surroundingMap, boolean):
         probabilityTrue = self.getNewOne(var, surroundingMap, True)
         probabilityFalse = self.getNewOne(var, surroundingMap, False)
+        if ((probabilityTrue + probabilityFalse) == 0.0):
+            return 0
+
         alpha = 1.0 / (probabilityFalse + probabilityTrue)
 
         if boolean:
