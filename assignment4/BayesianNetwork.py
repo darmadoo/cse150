@@ -232,21 +232,21 @@ class BayesianNetwork(object):
                 value = self.getNewProbs(var, currentEvent, True)
                 rand = random.random()
 
-                newBool = True
-                if value >= rand:
-                    newBool = False
+                newBool = False
+                if value < rand:
+                    newBool = True
 
                 # update value
-                newEvent[currentNode] = newBool
+                newEvent[currentNode.getVariable()] = newBool
 
                 queryValue = newEvent[queryVar]
 
-                if queryVar:
+                if queryValue:
                     query[0] += 1
                 else:
                     query[1] += 1
 
-        result = float(query[0]) / float(numTrials * len(nonEvidenceVar))
+        result = float(query[0]) / (float(numTrials * len(nonEvidenceVar)))
 
         return result
 
@@ -255,16 +255,12 @@ class BayesianNetwork(object):
         probabilityFalse = self.getNewOne(var, surroundingMap, False)
         alpha = 1.0 / (probabilityFalse + probabilityTrue)
 
-        beta = 0.0
-
         if boolean:
-            beta = probabilityTrue
+            alpha = probabilityTrue * alpha
         else:
-            beta = probabilityFalse
+            alpha = probabilityFalse * alpha
 
-        result = alpha * beta
-
-        return result
+        return alpha
 
 
     def getNewOne(self, var, map, boolean):
@@ -275,8 +271,10 @@ class BayesianNetwork(object):
         for parent in node.getParents():
             queryParents[parent.getVariable()] = map[parent.getVariable()]
 
+        # print var.getName()
+        # print "Hei"
         probGivenParents = node.getProbability(queryParents, boolean)
-        #print probGivenParents
+        # print probGivenParents
 
         probChildren = 1.0
 
