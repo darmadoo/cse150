@@ -214,15 +214,92 @@ class BayesianNetwork(object):
         for i in range(1, numTrials):
             for var in nonEvidenceVar:
                 currentNode = self.varMap[var]
+                markovNodes = self.markovBlanket(currentNode)
+
+                currentEvent = {} # make list of event for the nodes in mb
+                for node in markovNodes:
+                    currentEvent[node.getVariable()] = newEvent[node.getVariable()]
+
+                value = self.getNewProbs(var, currentEvent, True)
+                rand = random.random()
+
+                newBool = True
+                if value >= rand:
+                    newBool = False
+
+                # update value
+                newEvent[currentNode] = newBool
+
+                queryValue = newEvent[queryVar]
+
+                if queryVar:
+                    query[0] += 1
+                else:
+                    query[1] += 1
+
+        result = float(query[0]) / float(numTrials * len(nonEvidenceVar))
+
+        return result
+
+    def getNewProbs(self, var, surroundingMap, boolean):
+        probabilityTrue = self.getNewOne(var, surroundingMap, True)
+        probabilityFalse = self.getNewOne(var, surroundingMap, False)
+        alpha = 1.0 / (probabilityFalse + probabilityTrue)
+
+        beta = 0
+        if boolean:
+            beta = probabilityTrue
+        else:
+            beta = probabilityFalse
+
+        result = alpha * beta
+
+        return result
 
 
+    def getNewOne(self, var, map, boolean):
+        node = self.varMap[var]
+
+        queryParents = {}
+        for parent in node.getParents():
+            queryParents[parent] = map[parent.getVariable()]
+
+        probGivenParents = node.getProbability(queryParents, boolean)
+
+        probChildren = 1.0
+
+        for child in node.getChildren():
+            childrenParents = {}
+
+            for childParent in child.getParents():
+
+                if childParent.getVariable().equals(node.getVariable()):
+                    childrenParents[node.getVariable()] = boolean
+                else:
+                    childrenParents[childParent.getVariable()] = map[childParent.getVariable()]
+
+            probChildren *= child.getProbability(childrenParents, map[child.getVariable()])
+
+        result = probGivenParents * probChildren
+
+        return result
 
 
+    def markovBlanket(self, node):
+        everything = []
 
+        # add parents
+        for parent in node.getParents():
+            everything.append(parent)
 
-        return 0
+        for child in node.getChildren():
+            if child not in everything:
+                everything.append(child)
 
+                for childParent in child.getParents():
+                    if childParent not in everything:
+                        everything.append(childParent)
 
-    #def markovBlanket(self, node):
+        return everything
 
 
