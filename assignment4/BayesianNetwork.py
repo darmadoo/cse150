@@ -188,8 +188,11 @@ class BayesianNetwork(object):
 
         # get nonEvidence variables
         for var in self.varMap.keys():
-            if not var.getName() in sortedGiven:
+            if var not in sortedGiven:
                 nonEvidenceVar.append(var)
+
+        # for var in nonEvidenceVar:
+        #     print var.getName()
 
         newEvent = {}
 
@@ -209,11 +212,17 @@ class BayesianNetwork(object):
         for i in range(1, numTrials):
             for var in nonEvidenceVar:
                 currentNode = self.varMap[var]
+                # print currentNode.getVariable().getName()
                 markovNodes = self.markovBlanket(currentNode)
 
                 currentEvent = {} # make list of event for the nodes in mb
                 for node in markovNodes:
                     currentEvent[node.getVariable()] = newEvent[node.getVariable()]
+                # print var.getName()
+                # print "HEI"
+                # for weird in currentEvent:
+                #     print weird.getName()
+                #     print currentEvent[weird]
 
                 value = self.getNewProbs(var, currentEvent, True)
                 rand = random.random()
@@ -241,7 +250,8 @@ class BayesianNetwork(object):
         probabilityFalse = self.getNewOne(var, surroundingMap, False)
         alpha = 1.0 / (probabilityFalse + probabilityTrue)
 
-        beta = 0
+        beta = 0.0
+
         if boolean:
             beta = probabilityTrue
         else:
@@ -254,12 +264,14 @@ class BayesianNetwork(object):
 
     def getNewOne(self, var, map, boolean):
         node = self.varMap[var]
+        #print var.getName()
 
         queryParents = {}
         for parent in node.getParents():
-            queryParents[parent] = map[parent.getVariable()]
+            queryParents[parent.getVariable()] = map[parent.getVariable()]
 
         probGivenParents = node.getProbability(queryParents, boolean)
+        #print probGivenParents
 
         probChildren = 1.0
 
@@ -292,8 +304,13 @@ class BayesianNetwork(object):
                 everything.append(child)
 
                 for childParent in child.getParents():
-                    if childParent not in everything:
+                    if (childParent not in everything) and not (childParent == node):
                         everything.append(childParent)
+
+        # print "HEI"
+        # for node in everything:
+        #
+        #     print node.getVariable().getName()
 
         return everything
 
