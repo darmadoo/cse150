@@ -254,9 +254,7 @@ class BayesianNetwork(object):
         probabilityTrue = self.getNewOne(var, surroundingMap, True)
         probabilityFalse = self.getNewOne(var, surroundingMap, False)
 
-        # print "PROB: ", probabilityTrue, probabilityFalse
-
-        if  (probabilityTrue + probabilityFalse) == 0.0:
+        if (probabilityTrue + probabilityFalse) == 0.0:
             return 0
 
         alpha = 1.0 / (probabilityFalse + probabilityTrue)
@@ -274,7 +272,7 @@ class BayesianNetwork(object):
 
         queryParents = {}
         for parent in node.getParents():
-            queryParents[parent.getVariable()] = map[parent.getVariable().getName()]
+            queryParents[parent.getVariable().getName()] = map[parent.getVariable().getName()]
 
         # print var.getName()
         # print "Hei"
@@ -286,11 +284,10 @@ class BayesianNetwork(object):
             childrenParents = {}
 
             for childParent in child.getParents():
-
-                if childParent.getVariable().equals(node.getVariable()):
-                    childrenParents[node.getVariable()] = boolean
+                if (childParent.getVariable()).equals(node.getVariable()):
+                    childrenParents[node.getVariable().getName()] = boolean
                 else:
-                    childrenParents[childParent.getVariable()] = map[childParent.getVariable().getName()]
+                    childrenParents[childParent.getVariable().getName()] = map[childParent.getVariable().getName()]
 
             probChildren = probChildren * child.getProbability(childrenParents, map[child.getVariable().getName()])
 
