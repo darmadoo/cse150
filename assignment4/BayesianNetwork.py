@@ -83,7 +83,6 @@ class BayesianNetwork(object):
     def performRejectionSampling(self, queryVar, givenVars, numSamples):
         """ generated source for method performRejectionSampling """
         #  TODO
-        total = 0
         query = [0, 0]
 
         for i in range(1, numSamples):
@@ -200,60 +199,64 @@ class BayesianNetwork(object):
         #     print var.getName()
 
         newEvent = {}
-
         # get event
         for var in self.varMap.keys():
             if var in sortedGiven:
-                newEvent[var] = givenVars[var]
+                newEvent[var.getName()] = givenVars[var]
 
             else:
                 rand = random.random()
-                value = False
+
                 if rand > 0.5:
                     value = True
-                newEvent[var] = value
-
+                else:
+                    value = False
+                newEvent[var.getName()] = value
 
         for i in range(1, numTrials):
             for var in nonEvidenceVar:
+                # print "NON", var.getName()
                 currentNode = self.varMap[var]
                 # print currentNode.getVariable().getName()
                 markovNodes = self.markovBlanket(currentNode)
 
                 currentEvent = {} # make list of event for the nodes in mb
                 for node in markovNodes:
-                    currentEvent[node.getVariable()] = newEvent[node.getVariable()]
+                    currentEvent[node.getVariable().getName()] = newEvent[node.getVariable().getName()]
                 # print var.getName()
                 # print "HEI"
                 # for weird in currentEvent:
                 #     print weird.getName()
                 #     print currentEvent[weird]
 
-                value = self.getNewProbs(var, currentEvent, True)
-                rand = random.random()
+                # print "NANAN", currentEvent
 
-                newBool = False
-                if value < rand:
-                    newBool = True
+                value = self.getNewProbs(var, currentEvent, True)
+                newRand = random.random()
+
+                newBool = True
+                if value < newRand:
+                    newBool = False
 
                 # update value
-                newEvent[currentNode.getVariable()] = newBool
+                newEvent[currentNode.getVariable().getName()] = newBool
 
-                queryValue = newEvent[queryVar]
-
-                if queryValue:
+                if newEvent[queryVar.getName()]:
                     query[0] += 1
                 else:
                     query[1] += 1
 
         result = float(query[0]) / (float(numTrials * len(nonEvidenceVar)))
 
-        return result
+        return self.normalize(query)
 
     def getNewProbs(self, var, surroundingMap, boolean):
         probabilityTrue = self.getNewOne(var, surroundingMap, True)
         probabilityFalse = self.getNewOne(var, surroundingMap, False)
-        if ((probabilityTrue + probabilityFalse) == 0.0):
+
+        # print "PROB: ", probabilityTrue, probabilityFalse
+
+        if  (probabilityTrue + probabilityFalse) == 0.0:
             return 0
 
         alpha = 1.0 / (probabilityFalse + probabilityTrue)
@@ -268,16 +271,14 @@ class BayesianNetwork(object):
 
     def getNewOne(self, var, map, boolean):
         node = self.varMap[var]
-        #print var.getName()
 
         queryParents = {}
         for parent in node.getParents():
-            queryParents[parent.getVariable()] = map[parent.getVariable()]
+            queryParents[parent.getVariable()] = map[parent.getVariable().getName()]
 
         # print var.getName()
         # print "Hei"
         probGivenParents = node.getProbability(queryParents, boolean)
-        # print probGivenParents
 
         probChildren = 1.0
 
@@ -289,12 +290,11 @@ class BayesianNetwork(object):
                 if childParent.getVariable().equals(node.getVariable()):
                     childrenParents[node.getVariable()] = boolean
                 else:
-                    childrenParents[childParent.getVariable()] = map[childParent.getVariable()]
+                    childrenParents[childParent.getVariable()] = map[childParent.getVariable().getName()]
 
-            probChildren = probChildren * child.getProbability(childrenParents, map[child.getVariable()])
+            probChildren = probChildren * child.getProbability(childrenParents, map[child.getVariable().getName()])
 
         result = probGivenParents * probChildren
-        #print result
 
         return result
 
@@ -314,7 +314,7 @@ class BayesianNetwork(object):
                     if (childParent not in everything) and not (childParent == node):
                         everything.append(childParent)
 
-        # print "HEI"
+        # print "HEI", node.getVariable().getName()
         # for node in everything:
         #
         #     print node.getVariable().getName()
