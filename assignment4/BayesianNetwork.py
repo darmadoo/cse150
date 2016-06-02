@@ -291,9 +291,10 @@ class BayesianNetwork(object):
                 else:
                     childrenParents[childParent.getVariable()] = map[childParent.getVariable()]
 
-            probChildren *= child.getProbability(childrenParents, map[child.getVariable()])
+            probChildren = probChildren * child.getProbability(childrenParents, map[child.getVariable()])
 
         result = probGivenParents * probChildren
+        #print result
 
         return result
 

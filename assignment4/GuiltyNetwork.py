@@ -48,22 +48,100 @@ class GuiltyNetwork(object):
 
         #  Perform sampling tests
         #  ----------------------
-        #  P(J=1|B=1,M=1)
-        print("Test 1")
-        given1 = {}
-        given1[breaklaw]=True
-        given1[prosecutor]=False
-        print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 99999)))
-        print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 99999)))
-        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 99999)))
+        #  P(J=1|B=1,M=0)
+        # print("Test 1")
+        # given1 = {}
+        # given1[breaklaw]=True
+        # given1[prosecutor]=False
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 99999)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 99999)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 99999)))
+        #
+        # #  P(M=1|J=1)
+        # print("Test 2")
+        # given2 = {}
+        # given2[jail] = True
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given2, 99999)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given2, 99999)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given2, 99999)))
 
-        #  P(M=1|J=1)
+        #  P(J=1|B=1,M=0)
+        # print("Test 1")
+        # given1 = {}
+        # given1[breaklaw]=True
+        # given1[prosecutor]=False
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 1000)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 1000)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 1000)))
+        #
+        # print("Test 2")
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 2500)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 2500)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 2500)))
+        #
+        # print("Test 3")
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 10000)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 10000)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 10000)))
+        #
+        # print("Test 4")
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 25000)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 25000)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 25000)))
+        #
+        # print("Test 5")
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 50000)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 50000)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 50000)))
+        #
+        # print("Test 6")
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 100000)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 100000)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 100000)))
+        #
+        # print("Test 7")
+        # print("rejection sampling: " + str(guiltynet.performRejectionSampling(jail, given1, 125000)))
+        # print("weighted sampling: " + str(guiltynet.performWeightedSampling(jail, given1, 125000)))
+        # print("gibbs sampling: " + str(guiltynet.performGibbsSampling(jail, given1, 125000)))
+
+        print("Test 1")
+        # P(M=1|J=1)
+        given1 = {}
+        given1[jail] = True
+        print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given1, 1000)))
+        print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given1, 1000)))
+        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given1, 1000)))
+
         print("Test 2")
-        given2 = {}
-        given2[jail] = True
-        print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given2, 99999)))
-        print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given2, 99999)))
-        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given2, 99999)))
+        print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given1, 2500)))
+        print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given1, 2500)))
+        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given1, 2500)))
+
+        print("Test 3")
+        print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given1, 10000)))
+        print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given1, 10000)))
+        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given1, 10000)))
+
+        print("Test 4")
+        print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given1, 25000)))
+        print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given1, 25000)))
+        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given1, 25000)))
+
+        print("Test 5")
+        print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given1, 50000)))
+        print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given1, 50000)))
+        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given1, 50000)))
+
+        print("Test 6")
+        print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given1, 100000)))
+        print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given1, 100000)))
+        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given1, 100000)))
+
+        print("Test 7")
+        print("rejection sampling: " + str(guiltynet.performRejectionSampling(prosecutor, given1, 125000)))
+        print("weighted sampling: " + str(guiltynet.performWeightedSampling(prosecutor, given1, 125000)))
+        print("gibbs sampling: " + str(guiltynet.performGibbsSampling(prosecutor, given1, 125000)))
+
 
 
 if __name__ == '__main__':

@@ -49,12 +49,89 @@ class TestNetwork(object):
         print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 99999)))
         print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 99999)))
         #  P(B=1|J=1) = .016
-        print("Test 2")
-        given2 = {}
-        given2[john]=True
-        print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given2, 99999)))
-        print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given2, 99999)))
-        print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given2, 99999)))
+        # print("Test 2")
+        # given2 = {}
+        # given2[john]=True
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given2, 99999)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given2, 99999)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given2, 99999)))
+
+        #  P(J=1|B=0,E=1) = .2965
+        # print("Test 1")
+        # given1 = {}
+        # given1[burglary] = False
+        # given1[earthquake] = True
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(john, given1, 1000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 1000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 1000)))
+        #
+        # print("Test 2")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(john, given1, 2500)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 2500)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 2500)))
+        #
+        # print("Test 3")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(john, given1, 10000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 10000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 10000)))
+        #
+        # print("Test 4")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(john, given1, 25000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 25000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 25000)))
+        #
+        # print("Test 5")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(john, given1, 50000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 50000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 50000)))
+        #
+        # print("Test 6")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(john, given1, 100000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 100000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 100000)))
+        #
+        # print("Test 7")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(john, given1, 125000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(john, given1, 125000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(john, given1, 125000)))
+
+        # P(B=1|J=1) = .016
+        # print("Test 1")
+        # given1 = {}
+        # given1[john]=True
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given1, 1000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given1, 1000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given1, 1000)))
+        #
+        # print("Test 2")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given1, 2500)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given1, 2500)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given1, 2500)))
+        #
+        # print("Test 3")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given1, 10000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given1, 10000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given1, 10000)))
+        #
+        # print("Test 4")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given1, 25000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given1, 25000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given1, 25000)))
+        #
+        # print("Test 5")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given1, 50000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given1, 50000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given1, 50000)))
+        #
+        # print("Test 6")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given1, 100000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given1, 100000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given1, 100000)))
+        #
+        # print("Test 7")
+        # print("rejection sampling: " + str(alarmnet.performRejectionSampling(burglary, given1, 125000)))
+        # print("weighted sampling: " + str(alarmnet.performWeightedSampling(burglary, given1, 125000)))
+        # print("gibbs sampling: " + str(alarmnet.performGibbsSampling(burglary, given1, 125000)))
 
 
 if __name__ == '__main__':
